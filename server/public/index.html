@@ -3,64 +3,105 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Zaman Kilitli Kasa</title>
+<title>Zaman Kilitli Güvenli Paylaşım | Time-Locked Vault</title>
+<meta name="description" content="Zaman kilitli paylaşım ve güvenli veri teslimi için Time-Locked Vault. Vasiyet metni, acil durum paylaşımı veya panik satış önleme için geleceğe mesaj bırakın." />
+<link rel="canonical" href="https://timelockedvault.example/" />
+<meta property="og:title" content="Zaman Kilitli Güvenli Paylaşım" />
+<meta property="og:description" content="Zaman kilitli paylaşım ve güvenli veri teslimi için Time-Locked Vault. Vasiyet metni, acil durum bilgisi ya da panik satış önleme için geleceğe mesaj bırakın." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://timelockedvault.example/" />
+<meta property="og:site_name" content="Time-Locked Vault" />
+<meta property="og:image" content="https://timelockedvault.example/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Zaman Kilitli Güvenli Paylaşım" />
+<meta name="twitter:description" content="Zaman kilitli paylaşım ve güvenli veri teslimi için Time-Locked Vault. Vasiyet metni, acil durum bilgisi ya da panik satış önleme için geleceğe mesaj bırakın." />
+<meta name="twitter:image" content="https://timelockedvault.example/og-image.png" />
 <style>
   :root{
     --bg1:#0f172a; --bg2:#0ea5a9; --card:#ffffff; --ink:#0f172a; --muted:#6b7280;
     --pri:#0ea5a9; --pri2:#10b981; --border:#e6e9ee;
   }
-  *{box-sizing:border-box}
+  *{box-sizing:border-box;margin:0;padding:0}
   body{
-    margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; color:var(--ink);
+    margin:0; font-family: system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif; color:var(--ink);
     background: radial-gradient(1200px 800px at 80% -10%, rgba(255,255,255,0.08), transparent 60%),
                 linear-gradient(135deg,var(--bg1),var(--bg2));
-    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px;
+    min-height:100vh; display:flex; flex-direction:column;
   }
-  .wrap{ width:100%; max-width:880px; text-align:center; }
-  h1{color:#fff; font-size:32px; margin-bottom:8px}
-  p.desc{color:rgba(255,255,255,.85); font-size:18px; margin-bottom:28px}
-  .grid{
-    display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-  }
-  .card{
-    background:var(--card); border:1px solid var(--border); border-radius:16px;
-    padding:24px; text-align:left; display:flex; flex-direction:column;
-    box-shadow:0 10px 30px rgba(2,6,23,.25);
-  }
-  .card h2{margin:0 0 8px 0; font-size:20px}
-  .card p{color:var(--muted); flex:1}
-  .btn{
-    margin-top:16px; text-decoration:none; padding:12px 16px; border-radius:12px;
-    background:var(--pri2); color:#071019; font-weight:700; letter-spacing:.2px;
-    box-shadow:0 8px 24px rgba(16,185,129,.35);
-    text-align:center;
-  }
-  .btn:hover{filter:brightness(.95)}
-  footer{
-    margin-top:28px; font-size:13px; color:rgba(255,255,255,.65);
-  }
+  header{background:rgba(255,255,255,.08);backdrop-filter:blur(4px);}
+  .nav{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;}
+  .nav a{color:#fff;text-decoration:none;margin-right:16px;}
+  .nav a:last-child{margin-right:0;}
+  .nav .logo{font-weight:700;}
+  main{flex:1;display:flex;align-items:center;justify-content:center;padding:40px 20px;}
+  .wrap{width:100%;max-width:880px;text-align:center;}
+  h1{color:#fff;font-size:32px;margin-bottom:12px;}
+  p.desc{color:rgba(255,255,255,.85);font-size:18px;margin-bottom:32px;}
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;text-align:left;display:flex;flex-direction:column;box-shadow:0 10px 30px rgba(2,6,23,.25);}
+  .card h2{margin:0 0 8px;font-size:20px;}
+  .card p{color:var(--muted);flex:1;}
+  .btn{margin-top:16px;text-decoration:none;padding:12px 16px;border-radius:12px;background:var(--pri2);color:#071019;font-weight:700;letter-spacing:.2px;box-shadow:0 8px 24px rgba(16,185,129,.35);text-align:center;}
+  .btn:hover{filter:brightness(.95);}
+  footer{text-align:center;font-size:13px;color:rgba(255,255,255,.65);padding:20px;}
 </style>
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"Organization",
+ "name":"Time-Locked Vault",
+ "url":"https://timelockedvault.example/",
+ "contactPoint":[{"@type":"ContactPoint","email":"info@timelockedvault.example","contactType":"customer support"}]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"WebSite",
+ "url":"https://timelockedvault.example/",
+ "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://timelockedvault.example/search?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+ }
+}
+</script>
 </head>
 <body>
+<header>
+  <div class="nav">
+    <a class="logo" href="./index.html">Time‑Locked Vault</a>
+    <nav>
+      <a href="./index.html">Ana Sayfa</a>
+      <a href="./use-cases.html">Kullanım Senaryoları</a>
+      <a href="./encrypt.html">Kaydet</a>
+      <a href="./retrieve.html">Geri Al</a>
+    </nav>
+  </div>
+</header>
+<main>
   <div class="wrap">
-    <h1>🔐 Zaman Kilitli Kasa</h1>
-    <p class="desc">Gizli bilgilerini istersen belirlediğin tarihe kadar erişilemez şekilde sakla.<br>
-    Panik satışlarını, gereksiz müdahaleleri ve kötü alışkanlıklarını engelle!</p>
-
+    <h1>⏱️ Zaman Kilitli Güvenli Paylaşım</h1>
+    <p class="desc">Kritik bilgileri, vasiyet metinlerini ve yatırım talimatlarını belirlediğiniz tarihe kadar erişilemez şekilde saklayın.</p>
     <div class="grid">
       <div class="card">
-        <h2>🔒 Şifre Kaydet</h2>
-        <p>Gizli metnini gir, dilersen bir tarih belirle. Belirlediğin tarihten önce kimse — sen bile — göremeyecek.</p>
+        <h2>🔒 Kaydet</h2>
+        <p>Metninizi veya talimatınızı şifreleyip zaman kilidi ekleyin. Belirlediğiniz tarih gelene kadar erişim mümkün değildir.</p>
         <a class="btn" href="./encrypt.html">Kaydet</a>
       </div>
       <div class="card">
-        <h2>🔓 Şifre Geri Al</h2>
-        <p>Kayıt ID’si ve parolan ile gizli metnini geri al. Tarih belirlediysen erişim için o günü beklemelisin.</p>
+        <h2>🔓 Geri Al</h2>
+        <p>Kimlik bilgileri ve parolanızla kayıtlı içeriği alın. Zaman kilidi varsa erişim tarihi beklenmelidir.</p>
         <a class="btn" href="./retrieve.html">Geri Al</a>
       </div>
+      <div class="card">
+        <h2>📚 Kullanım Senaryoları</h2>
+        <p>Vasiyet metni, acil durum paylaşımı veya panik satış önleme gibi farklı senaryoları keşfedin.</p>
+        <a class="btn" href="./use-cases.html">Senaryolar</a>
+      </div>
     </div>
-
-    <footer>© 2025 Zaman Kilitli Kasa — Verilerin AES-256-GCM ve Google KMS ile korunur.</footer>
   </div>
+</main>
+<footer>© 2025 Time-Locked Vault — Verileriniz AES-256-GCM ve Google KMS ile korunur. İletişim: info@example.com</footer>
 </body>
 </html>

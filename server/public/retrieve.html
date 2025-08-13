@@ -3,96 +3,120 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Zaman Kilitli Kasa — Geri Al</title>
+<title>Geri Al | Zaman Kilitli Güvenli Paylaşım</title>
+<meta name="description" content="Zaman kilitli kasada saklanan veriyi ID ve parola ile geri alın. Güvenli veri teslimi." />
+<link rel="canonical" href="https://timelockedvault.example/retrieve.html" />
+<meta property="og:title" content="Geri Al - Time-Locked Vault" />
+<meta property="og:description" content="Zaman kilitli paylaşımdaki verinizi kimlik ve parola ile güvenle geri alın." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://timelockedvault.example/retrieve.html" />
+<meta property="og:site_name" content="Time-Locked Vault" />
+<meta property="og:image" content="https://timelockedvault.example/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Geri Al - Time-Locked Vault" />
+<meta name="twitter:description" content="Zaman kilitli paylaşımdaki verinizi kimlik ve parola ile güvenle geri alın." />
+<meta name="twitter:image" content="https://timelockedvault.example/og-image.png" />
 <style>
-  :root{ --bg1:#0f172a; --bg2:#f97316; --ink:#ffffff; --edge:rgba(255,255,255,.12); --btn:#10b981; --btn2:rgba(255,255,255,.06) }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; color:var(--ink);
-    background: radial-gradient(1200px 800px at 80% -10%, rgba(255,255,255,0.08), transparent 60%),
-                linear-gradient(135deg,var(--bg1),var(--bg2));
-    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px;
-  }
-  .wrap{ width:100%; max-width:760px; }
-  .card{
-    background:rgba(255,255,255,.08); border:1px solid var(--edge); border-radius:16px;
-    padding:20px 20px 12px; box-shadow:0 10px 30px rgba(0,0,0,.35); backdrop-filter: blur(6px);
-  }
-  h1{margin:0 0 6px 0; font-size:22px}
-  p.desc{margin:0 0 14px 0; opacity:.9}
-  label{display:block; font-weight:700; margin:12px 0 6px}
-  input{
-    width:100%; padding:12px; border-radius:12px; border:1px solid var(--edge);
-    background:rgba(255,255,255,.06); color:#fff; font-size:15px;
-  }
-  .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
-  .btn{
-    appearance:none; border:none; cursor:pointer; padding:12px 16px; border-radius:12px; font-weight:800; letter-spacing:.2px;
-    color:#071019; background:var(--btn); box-shadow:0 8px 24px rgba(16,185,129,.35);
-  }
-  .out{
-    margin-top:14px; background:var(--btn2); border:1px solid var(--edge); padding:12px; border-radius:12px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:14px;
-  }
-  .home{
-    display:inline-block; margin-top:14px; padding:10px 14px; border-radius:12px;
-    border:1px solid rgba(255,255,255,.25); text-decoration:none; color:#fff; background:transparent;
-  }
-  .home:hover{background:rgba(255,255,255,.06)}
-  .err{color:#ffb4b4; font-weight:700}
-  .badge{display:inline-block;font-size:12px;padding:4px 8px;border:1px solid var(--edge);border-radius:999px;opacity:.8;margin-bottom:10px}
+  :root{--bg1:#0f172a;--bg2:#f97316;--ink:#ffffff;--edge:rgba(255,255,255,.12);--btn:#10b981;--btn2:rgba(255,255,255,.06);}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:radial-gradient(1200px 800px at 80% -10%,rgba(255,255,255,0.08),transparent 60%),linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh;display:flex;flex-direction:column;}
+  header{background:rgba(255,255,255,.08);backdrop-filter:blur(4px);}
+  .nav{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;}
+  .nav a{color:#fff;text-decoration:none;margin-right:16px;}
+  .nav a:last-child{margin-right:0;}
+  .nav .logo{font-weight:700;}
+  main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;}
+  .wrap{width:100%;max-width:760px;}
+  .intro{background:rgba(255,255,255,.08);border:1px solid var(--edge);border-radius:16px;padding:16px;margin-bottom:20px;}
+  .intro p{margin:0 0 8px;opacity:.9;}
+  .intro a{color:#fff;text-decoration:none;font-weight:600;}
+  .card{background:rgba(255,255,255,.08);border:1px solid var(--edge);border-radius:16px;padding:20px 20px 12px;box-shadow:0 10px 30px rgba(0,0,0,.35);backdrop-filter:blur(6px);}
+  h1{margin:0 0 6px;font-size:22px;}
+  p.desc{margin:0 0 14px;opacity:.9;}
+  label{display:block;font-weight:700;margin:12px 0 6px;}
+  input{width:100%;padding:12px;border-radius:12px;border:1px solid var(--edge);background:rgba(255,255,255,.06);color:#fff;font-size:15px;}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+  .btn{appearance:none;border:none;cursor:pointer;padding:12px 16px;border-radius:12px;font-weight:800;letter-spacing:.2px;color:#071019;background:var(--btn);box-shadow:0 8px 24px rgba(16,185,129,.35);}
+  .out{margin-top:14px;background:var(--btn2);border:1px solid var(--edge);padding:12px;border-radius:12px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;display:none;}
+  footer{text-align:center;font-size:13px;color:rgba(255,255,255,.65);padding:20px;}
 </style>
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"Organization",
+ "name":"Time-Locked Vault",
+ "url":"https://timelockedvault.example/",
+ "contactPoint":[{"@type":"ContactPoint","email":"info@timelockedvault.example","contactType":"customer support"}]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"WebSite",
+ "url":"https://timelockedvault.example/",
+ "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://timelockedvault.example/search?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+ }
+}
+</script>
 </head>
 <body>
+<header>
+  <div class="nav">
+    <a class="logo" href="./index.html">Time‑Locked Vault</a>
+    <nav>
+      <a href="./index.html">Ana Sayfa</a>
+      <a href="./use-cases.html">Kullanım Senaryoları</a>
+      <a href="./encrypt.html">Kaydet</a>
+      <a href="./retrieve.html">Geri Al</a>
+    </nav>
+  </div>
+</header>
+<main>
   <div class="wrap">
+    <div class="intro">
+      <p>Bu sayfada daha önce saklanan verileri kimlik ve parola ile geri alırsınız. Zaman kilidi belirlenmişse erişim günü gelmeden içerik gösterilmez.</p>
+      <p><a href="./index.html">Ana sayfa</a> · <a href="./use-cases.html">Kullanım senaryoları</a></p>
+    </div>
     <div class="card">
-      <span class="badge">retrieve v2</span>
-      <h1>🔓 Zaman Kilitli Kasa — Geri Al</h1>
+      <h1>🔓 Geri Al</h1>
       <p class="desc" id="boot">Sayfa yüklendi (hazır).</p>
-
       <label>Kayıt ID’si</label>
       <input id="idInput" placeholder="ör. k4k9ab12cd34" />
-
       <label>Parola</label>
       <input id="passInput" placeholder="Kaydederken verilen parola" />
-
       <div class="actions">
-        <button id="getBtn" class="btn">Şifreyi Göster</button>
+        <button id="getBtn" class="btn">Veriyi Göster</button>
       </div>
-
-      <div id="result" class="out" style="display:none"></div>
-
-      <a class="home" href="./index.html">⬅ Ana sayfa</a>
+      <div id="result" class="out"></div>
     </div>
   </div>
-
+</main>
+<footer>© 2025 Time-Locked Vault — Verileriniz AES-256-GCM ve Google KMS ile korunur. İletişim: info@example.com</footer>
 <script>
-  console.log('[retrieve] init');
   const API_BASE = ''; // aynı origin
-
   function show(outEl, html){ outEl.style.display='block'; outEl.innerHTML = html; }
 
   document.getElementById('getBtn').addEventListener('click', async ()=>{
     const id = document.getElementById('idInput').value.trim();
     const passphrase = document.getElementById('passInput').value;
     const out = document.getElementById('result'); out.style.display='none'; out.innerHTML='';
-    console.log('[retrieve] click', { idLen: id.length });
 
     if(!id) return alert('ID gerekli');
     if(!passphrase) return alert('Parola gerekli');
 
     try{
       const url = API_BASE + '/api/get/' + encodeURIComponent(id);
-      console.log('[retrieve] fetch', url);
       const res = await fetch(url, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify({ passphrase })
       });
       const text = await res.text();
-      console.log('[retrieve] status', res.status, 'body', text);
       let j = {};
-      try { j = JSON.parse(text) } catch(_) { /* html vs dönerse */ }
+      try { j = JSON.parse(text) } catch(_) {}
 
       if(!res.ok){
         const msg = j.error || ('HTTP '+res.status);
@@ -113,10 +137,10 @@
         }else if(j.message){
           html += j.message;
         }
-        html += `<div style="margin-top:10px"><label>E-posta</label><input id="updEmail" value="${j.email || ''}" /></div>`;
-       html += `<div style="margin-top:10px"><label>Erişim Tarihi</label><input id="updDate" type="date" value="${j.unlockDate || ''}" /></div>`;
-       html += `<button id="updBtn" class="btn" style="margin-top:10px">Güncelle</button>`;
-       show(out, html);
+        html += `<div style=\"margin-top:10px\"><label>E-posta</label><input id=\"updEmail\" value=\"${j.email || ''}\" /></div>`;
+        html += `<div style=\"margin-top:10px\"><label>Erişim Tarihi</label><input id=\"updDate\" type=\"date\" value=\"${j.unlockDate || ''}\" /></div>`;
+        html += `<button id=\"updBtn\" class=\"btn\" style=\"margin-top:10px\">Güncelle</button>`;
+        show(out, html);
         const todayStr = new Date().toISOString().split('T')[0];
         const minDate = j.unlockDate && j.unlockDate > todayStr ? j.unlockDate : todayStr;
         document.getElementById('updDate').min = minDate;
@@ -132,18 +156,14 @@
             if(!res2.ok) throw new Error(j2.error || 'Güncelleme başarısız');
             show(out, 'Güncellendi');
           }catch(e){
-            show(out, `<span class="err">Hata:</span> ${e.message}`);
+            show(out, `<span class=\"err\">Hata:</span> ${e.message}`);
           }
         });
       } else {
-        show(out, `<div><b>Başlık:</b> ${j.title || '-'}</div>
-                 <div style="margin-top:8px"><b>Gizli metin:</b></div>
-                 <pre style="white-space:pre-wrap;margin:6px 0 0 0">${j.secret}</pre>`);
+        show(out, `<div><b>Başlık:</b> ${j.title || '-'}</div><div style=\"margin-top:8px\"><b>Gizli metin:</b></div><pre style=\"white-space:pre-wrap;margin:6px 0 0 0\">${j.secret}</pre>`);
       }
     }catch(e){
-      console.error('[retrieve] error', e);
-      const out = document.getElementById('result');
-      show(out, `<span class="err">Hata:</span> ${e.message}`);
+      show(out, `<span class=\"err\">Hata:</span> ${e.message}`);
     }
   });
 </script>

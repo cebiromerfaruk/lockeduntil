@@ -3,67 +3,98 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Zaman Kilitli Kasa — Kaydet</title>
+<title>Kaydet | Zaman Kilitli Güvenli Paylaşım</title>
+<meta name="description" content="Zaman kilitli kasa ile metin veya talimat kaydedin. AES-256-GCM ve Google KMS ile güvenli veri teslimi." />
+<link rel="canonical" href="https://timelockedvault.example/encrypt.html" />
+<meta property="og:title" content="Kaydet - Time-Locked Vault" />
+<meta property="og:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve belirlediğiniz tarihe kadar erişimi kilitleyin." />
+<meta property="og:type" content="website" />
+<meta property="og:url" content="https://timelockedvault.example/encrypt.html" />
+<meta property="og:site_name" content="Time-Locked Vault" />
+<meta property="og:image" content="https://timelockedvault.example/og-image.png" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Kaydet - Time-Locked Vault" />
+<meta name="twitter:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve belirlediğiniz tarihe kadar erişimi kilitleyin." />
+<meta name="twitter:image" content="https://timelockedvault.example/og-image.png" />
 <style>
-  :root{
-    --bg1:#0f172a; --bg2:#0ea5a9; --card:#ffffff; --ink:#0f172a; --muted:#6b7280;
-    --pri:#0ea5a9; --pri2:#10b981; --border:#e6e9ee; --soft:#f3f5f7;
-  }
-  *{box-sizing:border-box}
-  body{
-    margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; color:var(--ink);
-    background: radial-gradient(1200px 800px at 80% -10%, rgba(255,255,255,0.08), transparent 60%),
-                linear-gradient(135deg,var(--bg1),var(--bg2));
-    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px;
-  }
-  .wrap{ width:100%; max-width:760px; }
-  .card{
-    background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px 20px 16px;
-    box-shadow:0 10px 30px rgba(2,6,23,.25);
-  }
-  h1{margin:0 0 6px 0; font-size:22px}
-  p.desc{margin:0 0 14px 0; color:var(--muted)}
-  label{display:block; font-weight:600; margin:12px 0 6px}
-  input:not([type="checkbox"]), textarea{
-    width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background:#fff; font-size:15px;
-  }
-  input[type="checkbox"]{ margin-right:6px; }
-  textarea{min-height:110px; resize:vertical}
-  .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
-  @media (max-width:720px){ .row{grid-template-columns:1fr} }
-  .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
-  .btn{
-    appearance:none; border:none; cursor:pointer; padding:12px 16px; border-radius:12px; font-weight:700; letter-spacing:.2px;
-    color:#071019; background:var(--pri2); box-shadow:0 8px 24px rgba(16,185,129,.35);
-  }
-  .muted{color:var(--muted); font-size:13px}
-  .out{
-    margin-top:14px; background:var(--soft); border:1px dashed var(--border); padding:12px; border-radius:12px; display:none;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:14px;
-  }
-  .home{
-    display:inline-block; margin-top:14px; padding:10px 14px; border-radius:12px;
-    border:1px solid var(--border); text-decoration:none; color:var(--ink); background:#fff;
-  }
-  .home:hover{filter:brightness(.97)}
-  .err{color:#b91c1c; font-weight:600}
+  :root{--bg1:#0f172a;--bg2:#0ea5a9;--card:#ffffff;--ink:#0f172a;--muted:#6b7280;--pri:#0ea5a9;--pri2:#10b981;--border:#e6e9ee;--soft:#f3f5f7;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--ink);background:radial-gradient(1200px 800px at 80% -10%,rgba(255,255,255,0.08),transparent 60%),linear-gradient(135deg,var(--bg1),var(--bg2));min-height:100vh;display:flex;flex-direction:column;}
+  header{background:rgba(255,255,255,.08);backdrop-filter:blur(4px);}
+  .nav{max-width:960px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:12px 20px;}
+  .nav a{color:#fff;text-decoration:none;margin-right:16px;}
+  .nav a:last-child{margin-right:0;}
+  .nav .logo{font-weight:700;}
+  main{flex:1;display:flex;align-items:flex-start;justify-content:center;padding:40px 20px;}
+  .wrap{width:100%;max-width:760px;}
+  .intro{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;margin-bottom:20px;}
+  .intro p{margin:0 0 8px;color:var(--muted);}
+  .intro a{color:var(--pri);text-decoration:none;font-weight:600;}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px 20px 16px;box-shadow:0 10px 30px rgba(2,6,23,.25);}
+  h1{margin:0 0 6px;font-size:22px;}
+  p.desc{margin:0 0 14px;color:var(--muted);}
+  label{display:block;font-weight:600;margin:12px 0 6px;}
+  input:not([type="checkbox"]),textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--border);background:#fff;font-size:15px;}
+  input[type="checkbox"]{margin-right:6px;}
+  textarea{min-height:110px;resize:vertical;}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:720px){.row{grid-template-columns:1fr}}
+  .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;}
+  .btn{appearance:none;border:none;cursor:pointer;padding:12px 16px;border-radius:12px;font-weight:700;letter-spacing:.2px;color:#071019;background:var(--pri2);box-shadow:0 8px 24px rgba(16,185,129,.35);}
+  .muted{color:var(--muted);font-size:13px;}
+  .out{margin-top:14px;background:var(--soft);border:1px dashed var(--border);padding:12px;border-radius:12px;display:none;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;}
+  footer{text-align:center;font-size:13px;color:rgba(255,255,255,.65);padding:20px;}
 </style>
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"Organization",
+ "name":"Time-Locked Vault",
+ "url":"https://timelockedvault.example/",
+ "contactPoint":[{"@type":"ContactPoint","email":"info@timelockedvault.example","contactType":"customer support"}]
+}
+</script>
+<script type="application/ld+json">
+{
+ "@context":"https://schema.org",
+ "@type":"WebSite",
+ "url":"https://timelockedvault.example/",
+ "potentialAction":{
+    "@type":"SearchAction",
+    "target":"https://timelockedvault.example/search?q={search_term_string}",
+    "query-input":"required name=search_term_string"
+ }
+}
+</script>
 </head>
 <body>
+<header>
+  <div class="nav">
+    <a class="logo" href="./index.html">Time‑Locked Vault</a>
+    <nav>
+      <a href="./index.html">Ana Sayfa</a>
+      <a href="./use-cases.html">Kullanım Senaryoları</a>
+      <a href="./encrypt.html">Kaydet</a>
+      <a href="./retrieve.html">Geri Al</a>
+    </nav>
+  </div>
+</header>
+<main>
   <div class="wrap">
+    <div class="intro">
+      <p>Bu sayfada yeni bir kayıt oluşturur, dilerseniz erişim tarihini belirleyerek veriyi zaman kilitli hale getirirsiniz.</p>
+      <p><a href="./index.html">Ana sayfa</a> · <a href="./use-cases.html">Kullanım senaryoları</a></p>
+    </div>
     <div class="card">
-      <h1>🔒 Zaman Kilitli Kasa — Kaydet</h1>
-      <p class="desc">Gizli metnini gir, dilersen bir erişim tarihi seç ve kaydet. Tarih belirlemezsen kayıt hemen geri alınabilir.</p>
-
+      <h1>🔒 Kaydet</h1>
+      <p class="desc">Gizli metni girin, gerekli tarih ve parolaları belirleyin.</p>
       <label>Başlık (opsiyonel)</label>
       <input id="title" placeholder="Örn: Hisse A notu" />
-
       <label>Gizli metin</label>
-      <textarea id="secret" placeholder="Buraya gizli metnini yaz..."></textarea>
-
+      <textarea id="secret" placeholder="Buraya gizli metninizi yazın..."></textarea>
       <div class="row">
         <div>
-          <label title="Bu seçeneği işaretlersen, kayıt seçtiğin tarihe kadar kilitli kalır."><input id="useDate" type="checkbox" /> Erişim tarihini kullan</label>
+          <label title="Bu seçeneği işaretlerseniz, kayıt seçtiğiniz tarihe kadar kilitli kalır."><input id="useDate" type="checkbox" /> Erişim tarihini kullan</label>
           <input id="unlockDate" type="date" disabled />
         </div>
         <div>
@@ -71,24 +102,19 @@
           <input id="email" type="email" placeholder="ornek@site.com" />
         </div>
       </div>
-
-      <label>Master Parola (boş bırakırsan otomatik üreteceğiz)</label>
+      <label>Master Parola (boş bırakırsanız otomatik üretilir)</label>
       <input id="masterPass" placeholder="Master parola" />
-
-      <label>Görüntüleme Parolası (boş bırakırsan otomatik üreteceğiz)</label>
+      <label>Görüntüleme Parolası (boş bırakırsanız otomatik üretilir)</label>
       <input id="viewPass" placeholder="Görüntüleme parolası" />
-
       <div class="actions">
         <button id="saveBtn" class="btn">Kaydet</button>
-        <span class="muted">Kaydettikten sonra <b>ID</b> ve (gerekirse) <b>parolalar</b> görünecek — saklamayı unutma.</span>
+        <span class="muted">Kaydettikten sonra <b>ID</b> ve (gerekirse) <b>parolalar</b> görünecek — saklamayı unutmayın.</span>
       </div>
-
       <div id="result" class="out"></div>
-
-      <a class="home" href="./index.html">⬅ Ana sayfa</a>
     </div>
   </div>
-
+</main>
+<footer>© 2025 Time-Locked Vault — Verileriniz AES-256-GCM ve Google KMS ile korunur. İletişim: info@example.com</footer>
 <script>
   const API_BASE = ''; // aynı origin
   function genPassword(){ const a=new Uint8Array(16); crypto.getRandomValues(a); return btoa(String.fromCharCode(...a)); }
@@ -129,10 +155,10 @@
 
       out.style.display='block';
       out.innerHTML =
-        `<div><b>ID:</b> ${j.id}</div>
-         <div><b>Master Parola:</b> ${j.masterPass}</div>
-         <div><b>Görüntüleme Parolası:</b> ${j.viewPass}</div>
-         <div class="muted">Bu bilgileri güvenle sakla. Geri almak için <b>retrieve.html</b> sayfasında kullanacaksın.</div>`;
+        `<div><b>ID:</b> ${j.id}</div>`+
+        `<div><b>Master Parola:</b> ${j.masterPass}</div>`+
+        `<div><b>Görüntüleme Parolası:</b> ${j.viewPass}</div>`+
+        `<div class="muted">Bu bilgileri güvenle saklayın. Geri almak için <b>Geri Al</b> sayfasında kullanacaksınız.</div>`;
       document.getElementById('secret').value='';
     }catch(e){
       out.style.display='block';
