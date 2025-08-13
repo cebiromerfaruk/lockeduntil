@@ -114,9 +114,10 @@
           html += j.message;
         }
         html += `<div style="margin-top:10px"><label>E-posta</label><input id="updEmail" value="${j.email || ''}" /></div>`;
-        html += `<div style="margin-top:10px"><label>Erişim Tarihi</label><input id="updDate" type="date" value="${j.unlockDate || ''}" /></div>`;
-        html += `<button id="updBtn" class="btn" style="margin-top:10px">Güncelle</button>`;
-        show(out, html);
+       html += `<div style="margin-top:10px"><label>Erişim Tarihi</label><input id="updDate" type="date" value="${j.unlockDate || ''}" /></div>`;
+       html += `<button id="updBtn" class="btn" style="margin-top:10px">Güncelle</button>`;
+       show(out, html);
+        document.getElementById('updDate').min = new Date().toISOString().split('T')[0];
         document.getElementById('updBtn').addEventListener('click', async ()=>{
           const email = document.getElementById('updEmail').value || '';
           const unlockDate = document.getElementById('updDate').value || '';

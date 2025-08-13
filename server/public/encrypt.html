@@ -95,6 +95,8 @@
 
   const useDateEl = document.getElementById('useDate');
   const unlockDateEl = document.getElementById('unlockDate');
+  const today = new Date().toISOString().split('T')[0];
+  unlockDateEl.min = today;
   useDateEl.addEventListener('change', () => {
     unlockDateEl.disabled = !useDateEl.checked;
     if(!useDateEl.checked) unlockDateEl.value = '';

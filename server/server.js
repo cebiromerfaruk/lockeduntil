@@ -96,6 +96,15 @@ app.post('/api/store', async (req, res) => {
       return res.status(500).json({ error: 'Sunucu yapılandırması eksik (KMS anahtarı tanımlı değil).' });
     }
 
+    if (unlockDate) {
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+      const rd = new Date(unlockDate + 'T00:00:00');
+      if (isNaN(rd.getTime()) || rd < today) {
+        return res.status(400).json({ error: 'unlockDate bugünden önce olamaz' });
+      }
+    }
+
     // 1) Veriyi yerel DEK ile şifrele
     const { key: DEK, iv, ct, tag } = aeadEncrypt(secret);
 
@@ -212,10 +221,11 @@ app.post('/api/update/:id', async (req, res) => {
 
     const upd = {};
     if (unlockDate) {
-      const now = new Date();
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
       const rd = new Date(unlockDate + 'T00:00:00');
-      if (isNaN(rd.getTime()) || rd <= now) {
-        return res.status(400).json({ error: 'unlockDate gelecekte olmalı' });
+      if (isNaN(rd.getTime()) || rd < today) {
+        return res.status(400).json({ error: 'unlockDate bugünden önce olamaz' });
       }
       upd.unlockDate = unlockDate;
     }
