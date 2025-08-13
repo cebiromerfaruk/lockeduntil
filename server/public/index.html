@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zaman Kilitli Kasa</title>
+<style>
+  :root{
+    --bg1:#0f172a; --bg2:#0ea5a9; --card:#ffffff; --ink:#0f172a; --muted:#6b7280;
+    --pri:#0ea5a9; --pri2:#10b981; --border:#e6e9ee;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; color:var(--ink);
+    background: radial-gradient(1200px 800px at 80% -10%, rgba(255,255,255,0.08), transparent 60%),
+                linear-gradient(135deg,var(--bg1),var(--bg2));
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px;
+  }
+  .wrap{ width:100%; max-width:880px; text-align:center; }
+  h1{color:#fff; font-size:32px; margin-bottom:8px}
+  p.desc{color:rgba(255,255,255,.85); font-size:18px; margin-bottom:28px}
+  .grid{
+    display:grid; gap:20px; grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+  }
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:16px;
+    padding:24px; text-align:left; display:flex; flex-direction:column;
+    box-shadow:0 10px 30px rgba(2,6,23,.25);
+  }
+  .card h2{margin:0 0 8px 0; font-size:20px}
+  .card p{color:var(--muted); flex:1}
+  .btn{
+    margin-top:16px; text-decoration:none; padding:12px 16px; border-radius:12px;
+    background:var(--pri2); color:#071019; font-weight:700; letter-spacing:.2px;
+    box-shadow:0 8px 24px rgba(16,185,129,.35);
+    text-align:center;
+  }
+  .btn:hover{filter:brightness(.95)}
+  footer{
+    margin-top:28px; font-size:13px; color:rgba(255,255,255,.65);
+  }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <h1>🔐 Zaman Kilitli Kasa</h1>
+    <p class="desc">Gizli bilgilerini belirlediğin tarihe kadar erişilemez şekilde sakla.<br>
+    Panik satışlarını, gereksiz müdahaleleri ve kötü alışkanlıklarını engelle!</p>
+
+    <div class="grid">
+      <div class="card">
+        <h2>🔒 Şifre Kaydet</h2>
+        <p>Gizli metnini gir, bir tarih belirle. Bu tarihten önce kimse — sen bile — göremeyecek.</p>
+        <a class="btn" href="./encrypt.html">Kaydet</a>
+      </div>
+      <div class="card">
+        <h2>🔓 Şifre Geri Al</h2>
+        <p>Tarih geldiğinde kayıt ID’si ve parolan ile gizli metnini geri al.</p>
+        <a class="btn" href="./retrieve.html">Geri Al</a>
+      </div>
+    </div>
+
+    <footer>© 2025 Zaman Kilitli Kasa — Verilerin AES-256-GCM ve Google KMS ile korunur.</footer>
+  </div>
+</body>
+</html>

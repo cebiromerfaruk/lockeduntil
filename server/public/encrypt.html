@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zaman Kilitli Kasa — Kaydet</title>
+<style>
+  :root{
+    --bg1:#0f172a; --bg2:#0ea5a9; --card:#ffffff; --ink:#0f172a; --muted:#6b7280;
+    --pri:#0ea5a9; --pri2:#10b981; --border:#e6e9ee; --soft:#f3f5f7;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0; font-family: Inter, Segoe UI, Arial, sans-serif; color:var(--ink);
+    background: radial-gradient(1200px 800px at 80% -10%, rgba(255,255,255,0.08), transparent 60%),
+                linear-gradient(135deg,var(--bg1),var(--bg2));
+    min-height:100vh; display:flex; align-items:center; justify-content:center; padding:28px;
+  }
+  .wrap{ width:100%; max-width:760px; }
+  .card{
+    background:var(--card); border:1px solid var(--border); border-radius:16px; padding:20px 20px 16px;
+    box-shadow:0 10px 30px rgba(2,6,23,.25);
+  }
+  h1{margin:0 0 6px 0; font-size:22px}
+  p.desc{margin:0 0 14px 0; color:var(--muted)}
+  label{display:block; font-weight:600; margin:12px 0 6px}
+  input, textarea{
+    width:100%; padding:12px; border-radius:12px; border:1px solid var(--border); background:#fff; font-size:15px;
+  }
+  textarea{min-height:110px; resize:vertical}
+  .row{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  @media (max-width:720px){ .row{grid-template-columns:1fr} }
+  .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:16px}
+  .btn{
+    appearance:none; border:none; cursor:pointer; padding:12px 16px; border-radius:12px; font-weight:700; letter-spacing:.2px;
+    color:#071019; background:var(--pri2); box-shadow:0 8px 24px rgba(16,185,129,.35);
+  }
+  .muted{color:var(--muted); font-size:13px}
+  .out{
+    margin-top:14px; background:var(--soft); border:1px dashed var(--border); padding:12px; border-radius:12px; display:none;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size:14px;
+  }
+  .home{
+    display:inline-block; margin-top:14px; padding:10px 14px; border-radius:12px;
+    border:1px solid var(--border); text-decoration:none; color:var(--ink); background:#fff;
+  }
+  .home:hover{filter:brightness(.97)}
+  .err{color:#b91c1c; font-weight:600}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>🔒 Zaman Kilitli Kasa — Kaydet</h1>
+      <p class="desc">Gizli metnini gir, bir erişim tarihi seç ve kaydet. Tarih gelmeden geri alamazsın.</p>
+
+      <label>Başlık (opsiyonel)</label>
+      <input id="title" placeholder="Örn: Hisse A notu" />
+
+      <label>Gizli metin</label>
+      <textarea id="secret" placeholder="Buraya gizli metnini yaz..."></textarea>
+
+      <div class="row">
+        <div>
+          <label>Erişim tarihi</label>
+          <input id="unlockDate" type="date" />
+        </div>
+        <div>
+          <label>E-posta</label>
+          <input id="email" type="email" placeholder="ornek@site.com" />
+        </div>
+      </div>
+
+      <label>Parola (boş bırakırsan otomatik üreteceğiz)</label>
+      <input id="passphrase" placeholder="Kendi parolan (önerilir)" />
+
+      <div class="actions">
+        <button id="saveBtn" class="btn">Kaydet</button>
+        <span class="muted">Kaydettikten sonra <b>ID</b> ve (gerekirse) <b>parola</b> görünecek — saklamayı unutma.</span>
+      </div>
+
+      <div id="result" class="out"></div>
+
+      <a class="home" href="./index.html">⬅ Ana sayfa</a>
+    </div>
+  </div>
+
+<script>
+  const API_BASE = ''; // aynı origin
+  function genPassword(){ const a=new Uint8Array(16); crypto.getRandomValues(a); return btoa(String.fromCharCode(...a)); }
+
+  document.getElementById('saveBtn').addEventListener('click', async ()=>{
+    const title = document.getElementById('title').value || '';
+    const secret = document.getElementById('secret').value || '';
+    const unlockDate = document.getElementById('unlockDate').value;
+    const email = document.getElementById('email').value || '';
+    let passphrase = document.getElementById('passphrase').value || '';
+
+    const out = document.getElementById('result'); out.style.display='none'; out.innerHTML='';
+
+    if(!secret.trim()) return alert('Gizli metin gerekli');
+    if(!unlockDate) return alert('Erişim tarihi gerekli');
+    if(!email) return alert('E-posta gerekli');
+    if(!passphrase) passphrase = genPassword();
+
+    try{
+      const res = await fetch(API_BASE + '/api/store', {
+        method:'POST', headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ title, secret, unlockDate, email, passphrase })
+      });
+      const j = await res.json();
+      if(!res.ok) throw new Error(j.error || 'Kayıt başarısız');
+
+      out.style.display='block';
+      out.innerHTML =
+        `<div><b>ID:</b> ${j.id}</div>
+         <div><b>Parola:</b> ${j.passphrase}</div>
+         <div class="muted">Bu bilgileri güvenle sakla. Geri almak için <b>retrieve.html</b> sayfasında kullanacaksın.</div>`;
+      document.getElementById('secret').value='';
+    }catch(e){
+      out.style.display='block';
+      out.innerHTML = `<span class="err">Hata:</span> ${e.message}`;
+    }
+  });
+</script>
+</body>
+</html>
