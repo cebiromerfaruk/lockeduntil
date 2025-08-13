@@ -101,7 +101,7 @@ app.post('/api/store', async (req, res) => {
       today.setHours(0, 0, 0, 0);
       const rd = new Date(unlockDate + 'T00:00:00');
       if (isNaN(rd.getTime()) || rd < today) {
-        return res.status(400).json({ error: 'unlockDate bugünden önce olamaz' });
+        return res.status(400).json({ error: 'Seçilen tarih geçmişte olmamalı' });
       }
     }
 
@@ -225,7 +225,7 @@ app.post('/api/update/:id', async (req, res) => {
       today.setHours(0, 0, 0, 0);
       const rd = new Date(unlockDate + 'T00:00:00');
       if (isNaN(rd.getTime()) || rd < today) {
-        return res.status(400).json({ error: 'unlockDate bugünden önce olamaz' });
+        return res.status(400).json({ error: 'Seçilen tarih geçmişte olmamalı' });
       }
       upd.unlockDate = unlockDate;
     }
