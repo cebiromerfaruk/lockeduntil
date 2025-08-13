@@ -95,7 +95,12 @@
       try { j = JSON.parse(text) } catch(_) { /* html vs dönerse */ }
 
       if(!res.ok){
-        show(out, `<span class="err">Hata:</span> ${j.error || ('HTTP '+res.status)}`);
+        const msg = j.error || ('HTTP '+res.status);
+        if(res.status === 403){
+          show(out, msg);
+        } else {
+          show(out, `<span class="err">Hata:</span> ${msg}`);
+        }
         return;
       }
       show(out, `<div><b>Başlık:</b> ${j.title || '-'}</div>

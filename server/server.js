@@ -136,7 +136,7 @@ app.post('/api/get/:id', async (req, res) => {
       const now = new Date();
       const rd = new Date(row.unlockDate + 'T00:00:00');
       if (isNaN(rd.getTime())) return res.status(500).json({ error: 'Kayıtlı unlockDate geçersiz.' });
-      if (now < rd) return res.status(403).json({ error: 'Henüz erişim tarihi gelmedi' });
+        if (now < rd) return res.status(403).json({ error: `Şifre ${row.unlockDate} tarihinde çözülebilir` });
     }
 
     // 1) Passphrase'ten key türet → dek_pw'yi çöz → dek_kms elde et
