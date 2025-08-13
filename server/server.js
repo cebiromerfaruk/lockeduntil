@@ -59,6 +59,26 @@ async function derivePassKey(passphrase, saltB64) {
   return { key: Buffer.from(key), salt: salt.toString('base64') };
 }
 
+async function wrapDek(dek_kms, passphrase) {
+  const { key: pwKey, salt } = await derivePassKey(passphrase);
+  const iv = crypto.randomBytes(12);
+  const cipher = crypto.createCipheriv('aes-256-gcm', pwKey, iv);
+  const ct = Buffer.concat([cipher.update(dek_kms), cipher.final()]);
+  const tag = cipher.getAuthTag();
+  return { ct: ct.toString('base64'), iv: iv.toString('base64'), tag: tag.toString('base64'), salt };
+}
+
+async function unwrapDek(block, passphrase) {
+  const { key: pwKey } = await derivePassKey(passphrase, block.salt);
+  const dec = crypto.createDecipheriv('aes-256-gcm', pwKey, Buffer.from(block.iv, 'base64'));
+  dec.setAuthTag(Buffer.from(block.tag, 'base64'));
+  const dek_kms = Buffer.concat([
+    dec.update(Buffer.from(block.ct, 'base64')),
+    dec.final()
+  ]);
+  return dek_kms;
+}
+
 // ── Sağlık kontrolü ───────────────────────────────────────────────────────────
 app.get('/healthz', (req, res) => {
   const ok = !!(PROJECT_ID && KEYRING && KEYNAME && kmsKeyPath);
@@ -68,9 +88,9 @@ app.get('/healthz', (req, res) => {
 // ── API: Kaydet ───────────────────────────────────────────────────────────────
 app.post('/api/store', async (req, res) => {
   try {
-    const { title = '', secret, unlockDate = null, email, passphrase } = req.body || {};
-    if (!secret || !email || !passphrase) {
-      return res.status(400).json({ error: 'Eksik alan (secret/email/passphrase)' });
+    const { title = '', secret, unlockDate = null, email, masterPass, viewPass } = req.body || {};
+    if (!secret || !email || !masterPass || !viewPass) {
+      return res.status(400).json({ error: 'Eksik alan (secret/email/masterPass/viewPass)' });
     }
     if (!kmsKeyPath) {
       return res.status(500).json({ error: 'Sunucu yapılandırması eksik (KMS anahtarı tanımlı değil).' });
@@ -83,12 +103,9 @@ app.post('/api/store', async (req, res) => {
     const [encResp] = await kmsClient.encrypt({ name: kmsKeyPath, plaintext: DEK });
     const dek_kms = Buffer.from(encResp.ciphertext); // bu bytes'ı parola ile bir kez daha saracağız
 
-    // 3) Passphrase'ten anahtar türet ve dek_kms'i parolayla sar (AES-GCM)
-    const { key: pwKey, salt } = await derivePassKey(passphrase);
-    const ivPw = crypto.randomBytes(12);
-    const cipherPw = crypto.createCipheriv('aes-256-gcm', pwKey, ivPw);
-    const dekPwCt = Buffer.concat([cipherPw.update(dek_kms), cipherPw.final()]);
-    const tagPw = cipherPw.getAuthTag();
+    // 3) DEK'i master ve görüntüleme parolalarıyla ayrı ayrı sar
+    const dek_master = await wrapDek(dek_kms, masterPass);
+    const dek_view = await wrapDek(dek_kms, viewPass);
 
     // 4) Firestore'a yaz
     const id = genId();
@@ -100,16 +117,14 @@ app.post('/api/store', async (req, res) => {
       ciphertext: ct.toString('base64'),
       iv: iv.toString('base64'),
       tag: tag.toString('base64'),
-      // DEK'in KMS çıktısının parola ile sarılmış hali
-      dek_pw: dekPwCt.toString('base64'),
-      dek_pw_iv: ivPw.toString('base64'),
-      dek_pw_tag: tagPw.toString('base64'),
-      dek_pw_salt: salt, // scrypt salt
+      // DEK'in KMS çıktısının parolalarla sarılmış halleri
+      dek_master,
+      dek_view,
       createdAt: new Date().toISOString()
     });
 
-    // Not: passphrase'i saklamıyoruz; sadece kullanıcıya geri gösteriyoruz
-    res.json({ id, passphrase });
+    // Not: parolaları saklamıyoruz; sadece kullanıcıya geri gösteriyoruz
+    res.json({ id, masterPass, viewPass });
   } catch (e) {
     console.error('POST /api/store error:', e);
     res.status(500).json({ error: 'Sunucu hatası' });
@@ -131,51 +146,90 @@ app.post('/api/get/:id', async (req, res) => {
     if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
     const row = snap.data();
 
+    let dek_kms;
+    let owner = false;
+    try {
+      dek_kms = await unwrapDek(row.dek_master, passphrase);
+      owner = true;
+    } catch (_) {
+      try {
+        dek_kms = await unwrapDek(row.dek_view, passphrase);
+      } catch (e) {
+        return res.status(401).json({ error: 'Parola yanlış' });
+      }
+    }
+
     // Tarih kontrolü (varsa)
     if (row.unlockDate) {
       const now = new Date();
       const rd = new Date(row.unlockDate + 'T00:00:00');
       if (isNaN(rd.getTime())) return res.status(500).json({ error: 'Kayıtlı unlockDate geçersiz.' });
-        if (now < rd) return res.status(403).json({ error: `Şifre ${row.unlockDate} tarihinde çözülebilir` });
+      if (now < rd) {
+        if (owner) {
+          return res.json({ id, unlockDate: row.unlockDate, email: row.email, owner: true, message: `Şifre ${row.unlockDate} tarihinde çözülebilir` });
+        }
+        return res.status(403).json({ error: `Şifre ${row.unlockDate} tarihinde çözülebilir` });
+      }
     }
 
-    // 1) Passphrase'ten key türet → dek_pw'yi çöz → dek_kms elde et
-    if (!row.dek_pw || !row.dek_pw_iv || !row.dek_pw_tag || !row.dek_pw_salt) {
-      // Eski kayıt (parola katmanı yok). Güvenlik için erişimi reddedebilir veya geriye dönük uyumluluk sağlayabilirsin.
-      return res.status(409).json({ error: 'Bu kayıt eski formatta. Parola koruması yok. Yeniden oluşturman gerekir.' });
+    // Tarih kısıtlaması yok veya geçti → veriyi çöz
+    const [decResp] = await kmsClient.decrypt({ name: kmsKeyPath, ciphertext: dek_kms });
+    const DEK = Buffer.from(decResp.plaintext);
+    const secret = aeadDecrypt(
+      DEK,
+      Buffer.from(row.iv, 'base64'),
+      Buffer.from(row.tag, 'base64'),
+      Buffer.from(row.ciphertext, 'base64')
+    );
+
+    if (owner) {
+      return res.json({ id, title: row.title, secret, unlockDate: row.unlockDate, email: row.email, owner: true });
     }
-
-    try {
-      const { key: pwKey } = await derivePassKey(passphrase, row.dek_pw_salt);
-      const decPw = crypto.createDecipheriv('aes-256-gcm', pwKey, Buffer.from(row.dek_pw_iv, 'base64'));
-      decPw.setAuthTag(Buffer.from(row.dek_pw_tag, 'base64'));
-      const dek_kms = Buffer.concat([
-        decPw.update(Buffer.from(row.dek_pw, 'base64')),
-        decPw.final()
-      ]);
-
-      // 2) KMS.decrypt(dek_kms) → DEK
-      const [decResp] = await kmsClient.decrypt({
-        name: kmsKeyPath,
-        ciphertext: dek_kms
-      });
-      const DEK = Buffer.from(decResp.plaintext);
-
-      // 3) Veriyi çöz
-      const secret = aeadDecrypt(
-        DEK,
-        Buffer.from(row.iv, 'base64'),
-        Buffer.from(row.tag, 'base64'),
-        Buffer.from(row.ciphertext, 'base64')
-      );
-
-      return res.json({ id, title: row.title, secret, releaseDate: row.unlockDate });
-    } catch (e) {
-      // Parola yanlışsa AES-GCM auth patlar → buraya düşer
-      return res.status(401).json({ error: 'Parola yanlış' });
-    }
+    return res.json({ id, title: row.title, secret });
   } catch (e) {
     console.error('POST /api/get/:id error:', e);
+    res.status(500).json({ error: 'Sunucu hatası' });
+  }
+});
+
+// ── API: Güncelle ─────────────────────────────────────────────────────────────
+app.post('/api/update/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { passphrase, unlockDate, email } = req.body || {};
+    if (!id) return res.status(400).json({ error: 'ID gerekli' });
+    if (!passphrase) return res.status(400).json({ error: 'Parola gerekli' });
+
+    const snap = await col.doc(id).get();
+    if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
+    const row = snap.data();
+
+    try {
+      await unwrapDek(row.dek_master, passphrase);
+    } catch (e) {
+      return res.status(401).json({ error: 'Parola yanlış' });
+    }
+
+    const upd = {};
+    if (unlockDate) {
+      const now = new Date();
+      const rd = new Date(unlockDate + 'T00:00:00');
+      if (isNaN(rd.getTime()) || rd <= now) {
+        return res.status(400).json({ error: 'unlockDate gelecekte olmalı' });
+      }
+      upd.unlockDate = unlockDate;
+    }
+    if (email) {
+      upd.email = email;
+    }
+    if (Object.keys(upd).length === 0) {
+      return res.status(400).json({ error: 'Güncellenecek alan yok' });
+    }
+
+    await col.doc(id).update(upd);
+    res.json({ id, ...upd });
+  } catch (e) {
+    console.error('POST /api/update/:id error:', e);
     res.status(500).json({ error: 'Sunucu hatası' });
   }
 });

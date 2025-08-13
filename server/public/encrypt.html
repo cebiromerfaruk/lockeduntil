@@ -72,12 +72,15 @@
         </div>
       </div>
 
-      <label>Parola (boş bırakırsan otomatik üreteceğiz)</label>
-      <input id="passphrase" placeholder="Kendi parolan (önerilir)" />
+      <label>Master Parola (boş bırakırsan otomatik üreteceğiz)</label>
+      <input id="masterPass" placeholder="Master parola" />
+
+      <label>Görüntüleme Parolası (boş bırakırsan otomatik üreteceğiz)</label>
+      <input id="viewPass" placeholder="Görüntüleme parolası" />
 
       <div class="actions">
         <button id="saveBtn" class="btn">Kaydet</button>
-        <span class="muted">Kaydettikten sonra <b>ID</b> ve (gerekirse) <b>parola</b> görünecek — saklamayı unutma.</span>
+        <span class="muted">Kaydettikten sonra <b>ID</b> ve (gerekirse) <b>parolalar</b> görünecek — saklamayı unutma.</span>
       </div>
 
       <div id="result" class="out"></div>
@@ -103,19 +106,21 @@
     const useDate = useDateEl.checked;
     const unlockDate = useDate ? unlockDateEl.value : null;
     const email = document.getElementById('email').value || '';
-    let passphrase = document.getElementById('passphrase').value || '';
+    let masterPass = document.getElementById('masterPass').value || '';
+    let viewPass = document.getElementById('viewPass').value || '';
 
     const out = document.getElementById('result'); out.style.display='none'; out.innerHTML='';
 
     if(!secret.trim()) return alert('Gizli metin gerekli');
     if(useDate && !unlockDate) return alert('Erişim tarihi gerekli');
     if(!email) return alert('E-posta gerekli');
-    if(!passphrase) passphrase = genPassword();
+    if(!masterPass) masterPass = genPassword();
+    if(!viewPass) viewPass = genPassword();
 
     try{
       const res = await fetch(API_BASE + '/api/store', {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ title, secret, unlockDate: useDate ? unlockDate : null, email, passphrase })
+        body: JSON.stringify({ title, secret, unlockDate: useDate ? unlockDate : null, email, masterPass, viewPass })
       });
       const j = await res.json();
       if(!res.ok) throw new Error(j.error || 'Kayıt başarısız');
@@ -123,7 +128,8 @@
       out.style.display='block';
       out.innerHTML =
         `<div><b>ID:</b> ${j.id}</div>
-         <div><b>Parola:</b> ${j.passphrase}</div>
+         <div><b>Master Parola:</b> ${j.masterPass}</div>
+         <div><b>Görüntüleme Parolası:</b> ${j.viewPass}</div>
          <div class="muted">Bu bilgileri güvenle sakla. Geri almak için <b>retrieve.html</b> sayfasında kullanacaksın.</div>`;
       document.getElementById('secret').value='';
     }catch(e){
