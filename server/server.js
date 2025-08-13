@@ -79,6 +79,13 @@ async function unwrapDek(block, passphrase) {
   return dek_kms;
 }
 
+function formatDateTR(dateStr) {
+  const parts = (dateStr || '').split('-');
+  if (parts.length !== 3) return dateStr;
+  const [y, m, d] = parts;
+  return `${d}.${m}.${y}`;
+}
+
 // ── Sağlık kontrolü ───────────────────────────────────────────────────────────
 app.get('/healthz', (req, res) => {
   const ok = !!(PROJECT_ID && KEYRING && KEYNAME && kmsKeyPath);
@@ -175,9 +182,9 @@ app.post('/api/get/:id', async (req, res) => {
       if (isNaN(rd.getTime())) return res.status(500).json({ error: 'Kayıtlı unlockDate geçersiz.' });
       if (now < rd) {
         if (owner) {
-          return res.json({ id, unlockDate: row.unlockDate, email: row.email, owner: true, message: `Şifre ${row.unlockDate} tarihinde çözülebilir` });
+          return res.json({ id, unlockDate: row.unlockDate, email: row.email, owner: true, message: `Şifre ${formatDateTR(row.unlockDate)} tarihinde çözülebilir` });
         }
-        return res.status(403).json({ error: `Şifre ${row.unlockDate} tarihinde çözülebilir` });
+        return res.status(403).json({ error: `Şifre ${formatDateTR(row.unlockDate)} tarihinde çözülebilir` });
       }
     }
 
