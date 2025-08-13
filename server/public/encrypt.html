@@ -4,17 +4,17 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Kaydet | Zaman Kilitli Güvenli Paylaşım</title>
-<meta name="description" content="Zaman kilitli kasa ile metin veya talimat kaydedin. AES-256-GCM ve Google KMS ile güvenli veri teslimi." />
+<meta name="description" content="Zaman kilitli kasa ile metin veya talimat kaydedin, time-locked vault yaklaşımıyla. AES-256-GCM ve Google KMS ile güvenli veri teslimi." />
 <link rel="canonical" href="https://timelockedvault.example/encrypt.html" />
-<meta property="og:title" content="Kaydet - Time-Locked Vault" />
-<meta property="og:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve belirlediğiniz tarihe kadar erişimi kilitleyin." />
+<meta property="og:title" content="Kaydet - Gelecek Kasası" />
+<meta property="og:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve time-locked vault ile belirlediğiniz tarihe kadar erişimi kilitleyin." />
 <meta property="og:type" content="website" />
 <meta property="og:url" content="https://timelockedvault.example/encrypt.html" />
-<meta property="og:site_name" content="Time-Locked Vault" />
+<meta property="og:site_name" content="Gelecek Kasası" />
 <meta property="og:image" content="https://timelockedvault.example/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Kaydet - Time-Locked Vault" />
-<meta name="twitter:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve belirlediğiniz tarihe kadar erişimi kilitleyin." />
+<meta name="twitter:title" content="Kaydet - Gelecek Kasası" />
+<meta name="twitter:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve time-locked vault ile belirlediğiniz tarihe kadar erişimi kilitleyin." />
 <meta name="twitter:image" content="https://timelockedvault.example/og-image.png" />
 <style>
   :root{--bg1:#0f172a;--bg2:#0ea5a9;--card:#ffffff;--ink:#0f172a;--muted:#6b7280;--pri:#0ea5a9;--pri2:#10b981;--border:#e6e9ee;--soft:#f3f5f7;}
@@ -49,7 +49,7 @@
 {
  "@context":"https://schema.org",
  "@type":"Organization",
- "name":"Time-Locked Vault",
+ "name":"Gelecek Kasası",
  "url":"https://timelockedvault.example/",
  "contactPoint":[{"@type":"ContactPoint","email":"info@timelockedvault.example","contactType":"customer support"}]
 }
@@ -70,7 +70,7 @@
 <body>
 <header>
   <div class="nav">
-    <a class="logo" href="./index.html">Time‑Locked Vault</a>
+    <a class="logo" href="./index.html">Gelecek Kasası</a>
     <nav>
       <a href="./index.html">Ana Sayfa</a>
       <a href="./use-cases.html">Kullanım Senaryoları</a>
@@ -114,7 +114,7 @@
     </div>
   </div>
 </main>
-<footer>© 2025 Time-Locked Vault — Verileriniz AES-256-GCM ve Google KMS ile korunur. İletişim: info@example.com</footer>
+<footer>© 2025 Gelecek Kasası — Verileriniz AES-256-GCM ve Google KMS ile korunur. İletişim: info@example.com</footer>
 <script>
   const API_BASE = ''; // aynı origin
   function genPassword(){ const a=new Uint8Array(16); crypto.getRandomValues(a); return btoa(String.fromCharCode(...a)); }
