@@ -52,7 +52,7 @@
   <div class="wrap">
     <div class="card">
       <h1>🔒 Zaman Kilitli Kasa — Kaydet</h1>
-      <p class="desc">Gizli metnini gir, bir erişim tarihi seç ve kaydet. Tarih gelmeden geri alamazsın.</p>
+      <p class="desc">Gizli metnini gir, dilersen bir erişim tarihi seç ve kaydet. Tarih belirlemezsen kayıt hemen geri alınabilir.</p>
 
       <label>Başlık (opsiyonel)</label>
       <input id="title" placeholder="Örn: Hisse A notu" />
@@ -62,8 +62,8 @@
 
       <div class="row">
         <div>
-          <label>Erişim tarihi</label>
-          <input id="unlockDate" type="date" />
+          <label><input id="useDate" type="checkbox" /> Erişim tarihi</label>
+          <input id="unlockDate" type="date" disabled />
         </div>
         <div>
           <label>E-posta</label>
@@ -89,24 +89,32 @@
   const API_BASE = ''; // aynı origin
   function genPassword(){ const a=new Uint8Array(16); crypto.getRandomValues(a); return btoa(String.fromCharCode(...a)); }
 
+  const useDateEl = document.getElementById('useDate');
+  const unlockDateEl = document.getElementById('unlockDate');
+  useDateEl.addEventListener('change', () => {
+    unlockDateEl.disabled = !useDateEl.checked;
+    if(!useDateEl.checked) unlockDateEl.value = '';
+  });
+
   document.getElementById('saveBtn').addEventListener('click', async ()=>{
     const title = document.getElementById('title').value || '';
     const secret = document.getElementById('secret').value || '';
-    const unlockDate = document.getElementById('unlockDate').value;
+    const useDate = useDateEl.checked;
+    const unlockDate = useDate ? unlockDateEl.value : null;
     const email = document.getElementById('email').value || '';
     let passphrase = document.getElementById('passphrase').value || '';
 
     const out = document.getElementById('result'); out.style.display='none'; out.innerHTML='';
 
     if(!secret.trim()) return alert('Gizli metin gerekli');
-    if(!unlockDate) return alert('Erişim tarihi gerekli');
+    if(useDate && !unlockDate) return alert('Erişim tarihi gerekli');
     if(!email) return alert('E-posta gerekli');
     if(!passphrase) passphrase = genPassword();
 
     try{
       const res = await fetch(API_BASE + '/api/store', {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ title, secret, unlockDate, email, passphrase })
+        body: JSON.stringify({ title, secret, unlockDate: useDate ? unlockDate : null, email, passphrase })
       });
       const j = await res.json();
       if(!res.ok) throw new Error(j.error || 'Kayıt başarısız');

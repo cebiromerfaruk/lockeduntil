@@ -68,9 +68,9 @@ app.get('/healthz', (req, res) => {
 // ── API: Kaydet ───────────────────────────────────────────────────────────────
 app.post('/api/store', async (req, res) => {
   try {
-    const { title = '', secret, unlockDate, email, passphrase } = req.body || {};
-    if (!secret || !unlockDate || !email || !passphrase) {
-      return res.status(400).json({ error: 'Eksik alan (secret/unlockDate/email/passphrase)' });
+    const { title = '', secret, unlockDate = null, email, passphrase } = req.body || {};
+    if (!secret || !email || !passphrase) {
+      return res.status(400).json({ error: 'Eksik alan (secret/email/passphrase)' });
     }
     if (!kmsKeyPath) {
       return res.status(500).json({ error: 'Sunucu yapılandırması eksik (KMS anahtarı tanımlı değil).' });
@@ -95,7 +95,7 @@ app.post('/api/store', async (req, res) => {
     await col.doc(id).set({
       email,
       title,
-      unlockDate, // "YYYY-MM-DD"
+      unlockDate: unlockDate || null, // "YYYY-MM-DD" veya null
       // veri şifre bloğu
       ciphertext: ct.toString('base64'),
       iv: iv.toString('base64'),
@@ -131,11 +131,13 @@ app.post('/api/get/:id', async (req, res) => {
     if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
     const row = snap.data();
 
-    // Tarih kontrolü
-    const now = new Date();
-    const rd = new Date((row.unlockDate || '') + 'T00:00:00');
-    if (isNaN(rd.getTime())) return res.status(500).json({ error: 'Kayıtlı unlockDate geçersiz.' });
-    if (now < rd) return res.status(403).json({ error: 'Henüz erişim tarihi gelmedi' });
+    // Tarih kontrolü (varsa)
+    if (row.unlockDate) {
+      const now = new Date();
+      const rd = new Date(row.unlockDate + 'T00:00:00');
+      if (isNaN(rd.getTime())) return res.status(500).json({ error: 'Kayıtlı unlockDate geçersiz.' });
+      if (now < rd) return res.status(403).json({ error: 'Henüz erişim tarihi gelmedi' });
+    }
 
     // 1) Passphrase'ten key türet → dek_pw'yi çöz → dek_kms elde et
     if (!row.dek_pw || !row.dek_pw_iv || !row.dek_pw_tag || !row.dek_pw_salt) {
