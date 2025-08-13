@@ -227,6 +227,12 @@ app.post('/api/update/:id', async (req, res) => {
       if (isNaN(rd.getTime()) || rd < today) {
         return res.status(400).json({ error: 'Seçilen tarih geçmişte olmamalı' });
       }
+      if (row.unlockDate) {
+        const curr = new Date(row.unlockDate + 'T00:00:00');
+        if (rd < curr) {
+          return res.status(400).json({ error: 'Yeni tarih mevcut tarihten önce olamaz' });
+        }
+      }
       upd.unlockDate = unlockDate;
     }
     if (email) {

@@ -117,7 +117,9 @@
        html += `<div style="margin-top:10px"><label>Erişim Tarihi</label><input id="updDate" type="date" value="${j.unlockDate || ''}" /></div>`;
        html += `<button id="updBtn" class="btn" style="margin-top:10px">Güncelle</button>`;
        show(out, html);
-        document.getElementById('updDate').min = new Date().toISOString().split('T')[0];
+        const todayStr = new Date().toISOString().split('T')[0];
+        const minDate = j.unlockDate && j.unlockDate > todayStr ? j.unlockDate : todayStr;
+        document.getElementById('updDate').min = minDate;
         document.getElementById('updBtn').addEventListener('click', async ()=>{
           const email = document.getElementById('updEmail').value || '';
           const unlockDate = document.getElementById('updDate').value || '';
