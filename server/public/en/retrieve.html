@@ -120,7 +120,7 @@
       const res = await fetch(url, {
         method:'POST',
         headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ passphrase })
+        body: JSON.stringify({ passphrase, lang:'en' })
       });
       const text = await res.text();
       let j = {};
@@ -163,7 +163,7 @@
           try{
             const res2 = await fetch(API_BASE + '/api/update/' + encodeURIComponent(id), {
               method:'POST', headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({ passphrase, email, unlockDate })
+              body: JSON.stringify({ passphrase, email, unlockDate, lang:'en' })
             });
             const j2 = await res2.json();
             if(!res2.ok) throw new Error(j2.error || 'Update failed');
@@ -177,7 +177,7 @@
           try{
             const res3 = await fetch(API_BASE + '/api/delete/' + encodeURIComponent(id), {
               method:'POST', headers:{'Content-Type':'application/json'},
-              body: JSON.stringify({ passphrase })
+              body: JSON.stringify({ passphrase, lang:'en' })
             });
             const j3 = await res3.json();
             if(!res3.ok) throw new Error(j3.error || 'Delete failed');

@@ -165,7 +165,7 @@
     try{
       const res = await fetch(API_BASE + '/api/store', {
         method:'POST', headers:{'Content-Type':'application/json'},
-        body: JSON.stringify({ title, secret, unlockDate: useDate ? unlockDate : null, email, masterPass, viewPass })
+        body: JSON.stringify({ title, secret, unlockDate: useDate ? unlockDate : null, email, masterPass, viewPass, lang:'en' })
       });
       const j = await res.json();
       if(!res.ok) throw new Error(j.error || 'Save failed');

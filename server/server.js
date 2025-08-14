@@ -128,6 +128,43 @@ function formatDateTR(dateStr) {
   return `${d}.${m}.${y}`;
 }
 
+const messages = {
+  tr: {
+    ID_REQUIRED: 'ID gerekli',
+    PASS_REQUIRED: 'Parola gerekli',
+    CONFIG_MISSING: 'Sunucu yapılandırması eksik (KMS anahtarı tanımlı değil).',
+    NOT_FOUND: 'Bulunamadı',
+    PASS_WRONG: 'Parola yanlış',
+    INVALID_UNLOCK: 'Kayıtlı unlockDate geçersiz.',
+    PASSWORD_AVAILABLE: (date) => `Şifre ${formatDateTR(date)} tarihinde çözülebilir`,
+    SERVER_ERROR: 'Sunucu hatası',
+    DATE_PAST: 'Seçilen tarih geçmişte olmamalı',
+    DATE_BEFORE: 'Yeni tarih mevcut tarihten önce olamaz',
+    NO_FIELDS: 'Güncellenecek alan yok',
+    MISSING_FIELDS: 'Eksik alan (secret/email/masterPass/viewPass)'
+  },
+  en: {
+    ID_REQUIRED: 'ID required',
+    PASS_REQUIRED: 'Password required',
+    CONFIG_MISSING: 'Server misconfiguration (KMS key not set).',
+    NOT_FOUND: 'Not found',
+    PASS_WRONG: 'Incorrect password',
+    INVALID_UNLOCK: 'Stored unlockDate is invalid.',
+    PASSWORD_AVAILABLE: (date) => `Password can be decrypted on ${formatDateTR(date)}`,
+    SERVER_ERROR: 'Server error',
+    DATE_PAST: 'Selected date must not be in the past',
+    DATE_BEFORE: 'New date cannot be before the current date',
+    NO_FIELDS: 'Nothing to update',
+    MISSING_FIELDS: 'Missing fields (secret/email/masterPass/viewPass)'
+  }
+};
+
+function t(lang, key, ...args) {
+  const dict = messages[lang] || messages.tr;
+  const val = dict[key];
+  return typeof val === 'function' ? val(...args) : val;
+}
+
 // ── Sağlık kontrolü ───────────────────────────────────────────────────────────
 app.get('/healthz', (req, res) => {
   const ok = !!(PROJECT_ID && KEYRING && KEYNAME && kmsKeyPath);
@@ -144,12 +181,13 @@ app.get('/api/time', async (req, res) => {
 app.post('/api/store', async (req, res) => {
   try {
     const now = await getTrustedTime();
-    const { title = '', secret, unlockDate = null, email, masterPass, viewPass } = req.body || {};
+    const { title = '', secret, unlockDate = null, email, masterPass, viewPass, lang } = req.body || {};
+    const L = lang === 'en' ? 'en' : 'tr';
     if (!secret || !email || !masterPass || !viewPass) {
-      return res.status(400).json({ error: 'Eksik alan (secret/email/masterPass/viewPass)' });
+      return res.status(400).json({ error: t(L, 'MISSING_FIELDS') });
     }
     if (!kmsKeyPath) {
-      return res.status(500).json({ error: 'Sunucu yapılandırması eksik (KMS anahtarı tanımlı değil).' });
+      return res.status(500).json({ error: t(L, 'CONFIG_MISSING') });
     }
 
     if (unlockDate) {
@@ -157,7 +195,7 @@ app.post('/api/store', async (req, res) => {
       today.setUTCHours(0, 0, 0, 0);
       const rd = new Date(unlockDate + 'T00:00:00Z');
       if (isNaN(rd.getTime()) || rd < today) {
-        return res.status(400).json({ error: 'Seçilen tarih geçmişte olmamalı' });
+        return res.status(400).json({ error: t(L, 'DATE_PAST') });
       }
     }
 
@@ -192,23 +230,25 @@ app.post('/api/store', async (req, res) => {
     res.json({ id, masterPass, viewPass });
   } catch (e) {
     console.error('POST /api/store error:', e);
-    res.status(500).json({ error: 'Sunucu hatası' });
+    res.status(500).json({ error: t(L, 'SERVER_ERROR') });
   }
 });
 
 // ── API: Geri al ──────────────────────────────────────────────────────────────
 app.post('/api/get/:id', async (req, res) => {
+  const { lang } = req.body || {};
+  const L = lang === 'en' ? 'en' : 'tr';
   try {
     const id = req.params.id;
     const { passphrase } = req.body || {};
-    if (!id) return res.status(400).json({ error: 'ID gerekli' });
-    if (!passphrase) return res.status(400).json({ error: 'Parola gerekli' });
+    if (!id) return res.status(400).json({ error: t(L, 'ID_REQUIRED') });
+    if (!passphrase) return res.status(400).json({ error: t(L, 'PASS_REQUIRED') });
     if (!kmsKeyPath) {
-      return res.status(500).json({ error: 'Sunucu yapılandırması eksik (KMS anahtarı tanımlı değil).' });
+      return res.status(500).json({ error: t(L, 'CONFIG_MISSING') });
     }
 
     const snap = await col.doc(id).get();
-    if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
+    if (!snap.exists) return res.status(404).json({ error: t(L, 'NOT_FOUND') });
     const row = snap.data();
     const now = await getTrustedTime();
 
@@ -221,19 +261,19 @@ app.post('/api/get/:id', async (req, res) => {
       try {
         dek_kms = await unwrapDek(row.dek_view, passphrase);
       } catch (e) {
-        return res.status(401).json({ error: 'Parola yanlış' });
+        return res.status(401).json({ error: t(L, 'PASS_WRONG') });
       }
     }
 
     // Tarih kontrolü (varsa)
     if (row.unlockDate) {
       const rd = new Date(row.unlockDate + 'T00:00:00Z');
-      if (isNaN(rd.getTime())) return res.status(500).json({ error: 'Kayıtlı unlockDate geçersiz.' });
+      if (isNaN(rd.getTime())) return res.status(500).json({ error: t(L, 'INVALID_UNLOCK') });
       if (now < rd) {
         if (owner) {
-          return res.json({ id, unlockDate: row.unlockDate, email: row.email, owner: true, message: `Şifre ${formatDateTR(row.unlockDate)} tarihinde çözülebilir` });
+          return res.json({ id, unlockDate: row.unlockDate, email: row.email, owner: true, message: t(L, 'PASSWORD_AVAILABLE', row.unlockDate) });
         }
-        return res.status(403).json({ error: `Şifre ${formatDateTR(row.unlockDate)} tarihinde çözülebilir` });
+        return res.status(403).json({ error: t(L, 'PASSWORD_AVAILABLE', row.unlockDate) });
       }
     }
 
@@ -253,27 +293,29 @@ app.post('/api/get/:id', async (req, res) => {
     return res.json({ id, title: row.title, secret });
   } catch (e) {
     console.error('POST /api/get/:id error:', e);
-    res.status(500).json({ error: 'Sunucu hatası' });
+    res.status(500).json({ error: t(L, 'SERVER_ERROR') });
   }
 });
 
 // ── API: Güncelle ─────────────────────────────────────────────────────────────
 app.post('/api/update/:id', async (req, res) => {
+  const { lang } = req.body || {};
+  const L = lang === 'en' ? 'en' : 'tr';
   try {
     const id = req.params.id;
     const { passphrase, unlockDate, email } = req.body || {};
-    if (!id) return res.status(400).json({ error: 'ID gerekli' });
-    if (!passphrase) return res.status(400).json({ error: 'Parola gerekli' });
+    if (!id) return res.status(400).json({ error: t(L, 'ID_REQUIRED') });
+    if (!passphrase) return res.status(400).json({ error: t(L, 'PASS_REQUIRED') });
 
     const snap = await col.doc(id).get();
-    if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
+    if (!snap.exists) return res.status(404).json({ error: t(L, 'NOT_FOUND') });
     const row = snap.data();
     const now = await getTrustedTime();
 
     try {
       await unwrapDek(row.dek_master, passphrase);
     } catch (e) {
-      return res.status(401).json({ error: 'Parola yanlış' });
+      return res.status(401).json({ error: t(L, 'PASS_WRONG') });
     }
 
     const upd = {};
@@ -282,12 +324,12 @@ app.post('/api/update/:id', async (req, res) => {
       today.setUTCHours(0, 0, 0, 0);
       const rd = new Date(unlockDate + 'T00:00:00Z');
       if (isNaN(rd.getTime()) || rd < today) {
-        return res.status(400).json({ error: 'Seçilen tarih geçmişte olmamalı' });
+        return res.status(400).json({ error: t(L, 'DATE_PAST') });
       }
       if (row.unlockDate) {
         const curr = new Date(row.unlockDate + 'T00:00:00Z');
         if (rd < curr) {
-          return res.status(400).json({ error: 'Yeni tarih mevcut tarihten önce olamaz' });
+          return res.status(400).json({ error: t(L, 'DATE_BEFORE') });
         }
       }
       upd.unlockDate = unlockDate;
@@ -296,41 +338,43 @@ app.post('/api/update/:id', async (req, res) => {
       upd.email = email;
     }
     if (Object.keys(upd).length === 0) {
-      return res.status(400).json({ error: 'Güncellenecek alan yok' });
+      return res.status(400).json({ error: t(L, 'NO_FIELDS') });
     }
 
     await col.doc(id).update(upd);
     res.json({ id, ...upd });
   } catch (e) {
     console.error('POST /api/update/:id error:', e);
-    res.status(500).json({ error: 'Sunucu hatası' });
+    res.status(500).json({ error: t(L, 'SERVER_ERROR') });
   }
 });
 
 // ── API: Sil ─────────────────────────────────────────────────────────────
 app.post('/api/delete/:id', async (req, res) => {
+  const { lang } = req.body || {};
+  const L = lang === 'en' ? 'en' : 'tr';
   try {
     const id = req.params.id;
     const { passphrase } = req.body || {};
-    if (!id) return res.status(400).json({ error: 'ID gerekli' });
-    if (!passphrase) return res.status(400).json({ error: 'Parola gerekli' });
+    if (!id) return res.status(400).json({ error: t(L, 'ID_REQUIRED') });
+    if (!passphrase) return res.status(400).json({ error: t(L, 'PASS_REQUIRED') });
 
     const snap = await col.doc(id).get();
-    if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
+    if (!snap.exists) return res.status(404).json({ error: t(L, 'NOT_FOUND') });
     const row = snap.data();
     await getTrustedTime(); // zaman eşitlemesi için
 
     try {
       await unwrapDek(row.dek_master, passphrase);
     } catch (e) {
-      return res.status(401).json({ error: 'Parola yanlış' });
+      return res.status(401).json({ error: t(L, 'PASS_WRONG') });
     }
 
     await col.doc(id).delete();
     res.json({ id, deleted: true });
   } catch (e) {
     console.error('POST /api/delete/:id error:', e);
-    res.status(500).json({ error: 'Sunucu hatası' });
+    res.status(500).json({ error: t(L, 'SERVER_ERROR') });
   }
 });
 
