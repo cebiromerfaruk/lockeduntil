@@ -307,6 +307,33 @@ app.post('/api/update/:id', async (req, res) => {
   }
 });
 
+// ── API: Sil ─────────────────────────────────────────────────────────────
+app.post('/api/delete/:id', async (req, res) => {
+  try {
+    const id = req.params.id;
+    const { passphrase } = req.body || {};
+    if (!id) return res.status(400).json({ error: 'ID gerekli' });
+    if (!passphrase) return res.status(400).json({ error: 'Parola gerekli' });
+
+    const snap = await col.doc(id).get();
+    if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
+    const row = snap.data();
+    await getTrustedTime(); // zaman eşitlemesi için
+
+    try {
+      await unwrapDek(row.dek_master, passphrase);
+    } catch (e) {
+      return res.status(401).json({ error: 'Parola yanlış' });
+    }
+
+    await col.doc(id).delete();
+    res.json({ id, deleted: true });
+  } catch (e) {
+    console.error('POST /api/delete/:id error:', e);
+    res.status(500).json({ error: 'Sunucu hatası' });
+  }
+});
+
 // ── Listen ────────────────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => console.log('Server on', PORT));

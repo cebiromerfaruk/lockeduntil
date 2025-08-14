@@ -146,7 +146,7 @@
         }
         html += `<div style=\"margin-top:10px\"><label>E-posta</label><input id=\"updEmail\" value=\"${j.email || ''}\" /></div>`;
         html += `<div style=\"margin-top:10px\"><label>Erişim Tarihi</label><input id=\"updDate\" type=\"date\" value=\"${j.unlockDate || ''}\" /></div>`;
-        html += `<button id=\"updBtn\" class=\"btn\" style=\"margin-top:10px\">Güncelle</button>`;
+        html += `<div class=\"actions\" style=\"margin-top:10px\"><button id=\"updBtn\" class=\"btn\">Güncelle</button><button id=\"delBtn\" class=\"btn\" style=\"background:#ef4444\">Sil</button></div>`;
         show(out, html);
         let todayStr = new Date().toISOString().split('T')[0];
         try{
@@ -167,6 +167,20 @@
             const j2 = await res2.json();
             if(!res2.ok) throw new Error(j2.error || 'Güncelleme başarısız');
             show(out, 'Güncellendi');
+          }catch(e){
+            show(out, `<span class=\"err\">Hata:</span> ${e.message}`);
+          }
+        });
+        document.getElementById('delBtn').addEventListener('click', async ()=>{
+          if(!confirm('Bu kayıt kalıcı olarak silinecek. Emin misiniz?')) return;
+          try{
+            const res3 = await fetch(API_BASE + '/api/delete/' + encodeURIComponent(id), {
+              method:'POST', headers:{'Content-Type':'application/json'},
+              body: JSON.stringify({ passphrase })
+            });
+            const j3 = await res3.json();
+            if(!res3.ok) throw new Error(j3.error || 'Silme başarısız');
+            show(out, 'Kayıt silindi');
           }catch(e){
             show(out, `<span class=\"err\">Hata:</span> ${e.message}`);
           }
