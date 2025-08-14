@@ -148,7 +148,12 @@
         html += `<div style=\"margin-top:10px\"><label>Erişim Tarihi</label><input id=\"updDate\" type=\"date\" value=\"${j.unlockDate || ''}\" /></div>`;
         html += `<button id=\"updBtn\" class=\"btn\" style=\"margin-top:10px\">Güncelle</button>`;
         show(out, html);
-        const todayStr = new Date().toISOString().split('T')[0];
+        let todayStr = new Date().toISOString().split('T')[0];
+        try{
+          const rt = await fetch(API_BASE + '/api/time');
+          const jt = await rt.json();
+          todayStr = new Date(jt.now).toISOString().split('T')[0];
+        }catch(_){ }
         const minDate = j.unlockDate && j.unlockDate > todayStr ? j.unlockDate : todayStr;
         document.getElementById('updDate').min = minDate;
         document.getElementById('updBtn').addEventListener('click', async ()=>{

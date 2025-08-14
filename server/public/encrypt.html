@@ -129,8 +129,16 @@
 
   const useDateEl = document.getElementById('useDate');
   const unlockDateEl = document.getElementById('unlockDate');
-  const today = new Date().toISOString().split('T')[0];
-  unlockDateEl.min = today;
+  async function setMin(){
+    try{
+      const r = await fetch(API_BASE + '/api/time');
+      const j = await r.json();
+      unlockDateEl.min = new Date(j.now).toISOString().split('T')[0];
+    }catch(_){
+      unlockDateEl.min = new Date().toISOString().split('T')[0];
+    }
+  }
+  setMin();
   useDateEl.addEventListener('change', () => {
     unlockDateEl.disabled = !useDateEl.checked;
     if(!useDateEl.checked) unlockDateEl.value = '';

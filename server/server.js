@@ -4,6 +4,7 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import crypto from 'crypto';
 import { promisify } from 'util';
+import dgram from 'dgram';
 import { Firestore } from '@google-cloud/firestore';
 import { KeyManagementServiceClient } from '@google-cloud/kms';
 import { customAlphabet } from 'nanoid';
@@ -35,6 +36,47 @@ try {
 const db = new Firestore();
 const col = db.collection('vault');
 const genId = customAlphabet('1234567890abcdefghijklmnopqrstuvwxyz', 12);
+
+// ── NTP Time ───────────────────────────────────────────────────────────────────
+let lastTrustedTime = new Date();
+
+async function fetchNtpTime(host = 'time.google.com', port = 123, timeout = 2000) {
+  return new Promise((resolve, reject) => {
+    const client = dgram.createSocket('udp4');
+    const pkt = Buffer.alloc(48);
+    pkt[0] = 0x1b; // LI=0, VN=3, Mode=3 (client)
+
+    const onError = (err) => {
+      client.close();
+      reject(err);
+    };
+
+    client.once('error', onError);
+    client.once('message', (msg) => {
+      client.close();
+      const secs = msg.readUIntBE(40, 4) - 2208988800; // NTP epoch to Unix epoch
+      const frac = msg.readUIntBE(44, 4) / 2 ** 32;
+      const ms = secs * 1000 + frac * 1000;
+      resolve(new Date(ms));
+    });
+
+    client.send(pkt, port, host, (err) => {
+      if (err) onError(err);
+    });
+
+    setTimeout(() => onError(new Error('NTP timeout')), timeout);
+  });
+}
+
+async function getTrustedTime() {
+  try {
+    lastTrustedTime = await fetchNtpTime();
+    return lastTrustedTime;
+  } catch (e) {
+    console.error('NTP zaman alınamadı, son bilinen zaman kullanılacak:', e);
+    return lastTrustedTime;
+  }
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function aeadEncrypt(plain) {
@@ -92,9 +134,16 @@ app.get('/healthz', (req, res) => {
   res.status(200).send(ok ? 'ok' : 'ok (config warning)');
 });
 
+// Güvenilir zamanı istemciye döner
+app.get('/api/time', async (req, res) => {
+  const now = await getTrustedTime();
+  res.json({ now: now.toISOString() });
+});
+
 // ── API: Kaydet ───────────────────────────────────────────────────────────────
 app.post('/api/store', async (req, res) => {
   try {
+    const now = await getTrustedTime();
     const { title = '', secret, unlockDate = null, email, masterPass, viewPass } = req.body || {};
     if (!secret || !email || !masterPass || !viewPass) {
       return res.status(400).json({ error: 'Eksik alan (secret/email/masterPass/viewPass)' });
@@ -104,9 +153,9 @@ app.post('/api/store', async (req, res) => {
     }
 
     if (unlockDate) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const rd = new Date(unlockDate + 'T00:00:00');
+      const today = new Date(now);
+      today.setUTCHours(0, 0, 0, 0);
+      const rd = new Date(unlockDate + 'T00:00:00Z');
       if (isNaN(rd.getTime()) || rd < today) {
         return res.status(400).json({ error: 'Seçilen tarih geçmişte olmamalı' });
       }
@@ -136,7 +185,7 @@ app.post('/api/store', async (req, res) => {
       // DEK'in KMS çıktısının parolalarla sarılmış halleri
       dek_master,
       dek_view,
-      createdAt: new Date().toISOString()
+      createdAt: now.toISOString()
     });
 
     // Not: parolaları saklamıyoruz; sadece kullanıcıya geri gösteriyoruz
@@ -161,6 +210,7 @@ app.post('/api/get/:id', async (req, res) => {
     const snap = await col.doc(id).get();
     if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
     const row = snap.data();
+    const now = await getTrustedTime();
 
     let dek_kms;
     let owner = false;
@@ -177,8 +227,7 @@ app.post('/api/get/:id', async (req, res) => {
 
     // Tarih kontrolü (varsa)
     if (row.unlockDate) {
-      const now = new Date();
-      const rd = new Date(row.unlockDate + 'T00:00:00');
+      const rd = new Date(row.unlockDate + 'T00:00:00Z');
       if (isNaN(rd.getTime())) return res.status(500).json({ error: 'Kayıtlı unlockDate geçersiz.' });
       if (now < rd) {
         if (owner) {
@@ -219,6 +268,7 @@ app.post('/api/update/:id', async (req, res) => {
     const snap = await col.doc(id).get();
     if (!snap.exists) return res.status(404).json({ error: 'Bulunamadı' });
     const row = snap.data();
+    const now = await getTrustedTime();
 
     try {
       await unwrapDek(row.dek_master, passphrase);
@@ -228,14 +278,14 @@ app.post('/api/update/:id', async (req, res) => {
 
     const upd = {};
     if (unlockDate) {
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      const rd = new Date(unlockDate + 'T00:00:00');
+      const today = new Date(now);
+      today.setUTCHours(0, 0, 0, 0);
+      const rd = new Date(unlockDate + 'T00:00:00Z');
       if (isNaN(rd.getTime()) || rd < today) {
         return res.status(400).json({ error: 'Seçilen tarih geçmişte olmamalı' });
       }
       if (row.unlockDate) {
-        const curr = new Date(row.unlockDate + 'T00:00:00');
+        const curr = new Date(row.unlockDate + 'T00:00:00Z');
         if (rd < curr) {
           return res.status(400).json({ error: 'Yeni tarih mevcut tarihten önce olamaz' });
         }

@@ -8,6 +8,8 @@ Future Vault is a lightweight time‑locked vault that keeps your important info
 - 🗝️ **Dual password system:** Generates separate passwords for the creator and the viewer.
 - ☁️ **Cloud‑backed security:** Scales with Firestore and KMS.
 - 🌐 **Web interface and API:** Interact via pages under `server/public` or through the REST API.
+- 🕒 **Trusted time source:** Server fetches UTC time from Google Public NTP (`time.google.com`) and falls back to the last
+  known good value on failure.
 
 ## Getting Started
 
