@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Kaydet | Zaman Kilitli Güvenli Paylaşım</title>
-<meta name="description" content="Zaman kilitli kasa ile metin veya talimat kaydedin, time-locked vault yaklaşımıyla. AES-256-GCM ve Google KMS ile güvenli veri teslimi." />
-<link rel="canonical" href="https://timelockedvault.example/encrypt.html" />
-<meta property="og:title" content="Kaydet - Gelecek Kasası" />
-<meta property="og:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve time-locked vault ile belirlediğiniz tarihe kadar erişimi kilitleyin." />
+<title>Save | Time-Locked Secure Sharing</title>
+<meta name="description" content="Save text or instructions with a time-locked vault. Secure delivery with AES-256-GCM and Google KMS." />
+<link rel="canonical" href="https://timelockedvault.example/en/encrypt.html" />
+<meta property="og:title" content="Save - Future Vault" />
+<meta property="og:description" content="Encrypt your text for time-locked sharing and block access until the chosen date." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://timelockedvault.example/encrypt.html" />
-<meta property="og:site_name" content="Gelecek Kasası" />
+<meta property="og:url" content="https://timelockedvault.example/en/encrypt.html" />
+<meta property="og:site_name" content="Future Vault" />
 <meta property="og:image" content="https://timelockedvault.example/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Kaydet - Gelecek Kasası" />
-<meta name="twitter:description" content="Zaman kilitli paylaşım için metninizi şifreleyin ve time-locked vault ile belirlediğiniz tarihe kadar erişimi kilitleyin." />
+<meta name="twitter:title" content="Save - Future Vault" />
+<meta name="twitter:description" content="Encrypt your text for time-locked sharing and block access until the chosen date." />
 <meta name="twitter:image" content="https://timelockedvault.example/og-image.png" />
 <style>
   :root{--bg1:#0f172a;--bg2:#0ea5a9;--card:#ffffff;--ink:#0f172a;--muted:#6b7280;--pri:#0ea5a9;--pri2:#10b981;--border:#e6e9ee;--soft:#f3f5f7;}
@@ -56,7 +56,7 @@
 {
  "@context":"https://schema.org",
  "@type":"Organization",
- "name":"Gelecek Kasası",
+ "name":"Future Vault",
  "url":"https://timelockedvault.example/",
  "contactPoint":[{"@type":"ContactPoint","email":"info@timelockedvault.example","contactType":"customer support"}]
 }
@@ -77,55 +77,55 @@
 <body>
 <header>
   <div class="nav">
-    <a class="logo" href="./index.html"><img src="./logo.svg" alt="Gelecek Kasası logo"></a>
+    <a class="logo" href="./index.html"><img src="../logo.svg" alt="Future Vault logo"></a>
     <nav>
-      <a href="./index.html">Ana Sayfa</a>
-      <a href="./use-cases.html">Kullanım Senaryoları</a>
-      <a href="./neden-guvenebilirsiniz.html">Neden Güvenebilirsiniz</a>
-      <a href="./encrypt.html">Kaydet</a>
-      <a href="./retrieve.html">Geri Al</a>
-          <a href="./en/encrypt.html" lang="en">English</a>
+      <a href="./index.html">Home</a>
+      <a href="./use-cases.html">Use Cases</a>
+      <a href="./why-trust.html">Why Trust Us</a>
+      <a href="./encrypt.html">Save</a>
+      <a href="./retrieve.html">Retrieve</a>
+      <a href="../encrypt.html" lang="tr">Türkçe</a>
     </nav>
   </div>
 </header>
 <main>
   <div class="wrap">
     <div class="intro">
-      <p>Bu sayfada yeni bir kayıt oluşturur, dilerseniz erişim tarihini belirleyerek veriyi zaman kilitli hale getirirsiniz.</p>
-      <p><a href="./index.html">Ana sayfa</a> · <a href="./use-cases.html">Kullanım senaryoları</a></p>
+      <p>On this page you create a new record and optionally make it time-locked by choosing an unlock date.</p>
+      <p><a href="./index.html">Home</a> · <a href="./use-cases.html">Use Cases</a></p>
     </div>
     <div class="card">
-      <h1>🔒 Kaydet</h1>
-      <p class="desc">Gizli metni girin, gerekli tarih ve parolaları belirleyin.</p>
-      <label>Başlık (opsiyonel)</label>
-      <input id="title" placeholder="Örn: Hisse A notu" />
-      <label>Gizli metin</label>
-      <textarea id="secret" placeholder="Buraya gizli metninizi yazın..."></textarea>
+      <h1>🔒 Save</h1>
+      <p class="desc">Enter the secret text and specify the necessary date and passwords.</p>
+      <label>Title (optional)</label>
+      <input id="title" placeholder="e.g. Stock A note" />
+      <label>Secret text</label>
+      <textarea id="secret" placeholder="Write your secret here..."></textarea>
       <div class="row">
         <div>
-          <label title="Bu seçeneği işaretlerseniz, kayıt seçtiğiniz tarihe kadar kilitli kalır."><input id="useDate" type="checkbox" /> Erişim tarihini kullan</label>
+          <label title="If selected, the record remains locked until the chosen date."><input id="useDate" type="checkbox" /> Use unlock date</label>
           <input id="unlockDate" type="date" disabled />
         </div>
         <div>
-          <label>E-posta</label>
-          <input id="email" type="email" placeholder="ornek@site.com" />
+          <label>Email</label>
+          <input id="email" type="email" placeholder="example@site.com" />
         </div>
       </div>
-      <label>Master Parola (boş bırakırsanız otomatik üretilir)</label>
-      <input id="masterPass" placeholder="Master parola" />
-      <label>Görüntüleme Parolası (boş bırakırsanız otomatik üretilir)</label>
-      <input id="viewPass" placeholder="Görüntüleme parolası" />
+      <label>Master Password (blank to auto-generate)</label>
+      <input id="masterPass" placeholder="Master password" />
+      <label>View Password (blank to auto-generate)</label>
+      <input id="viewPass" placeholder="View password" />
       <div class="actions">
-        <button id="saveBtn" class="btn">Kaydet</button>
-        <span class="muted">Kaydettikten sonra <b>ID</b> ve (gerekirse) <b>parolalar</b> görünecek — saklamayı unutmayın.</span>
+        <button id="saveBtn" class="btn">Save</button>
+        <span class="muted">After saving, <b>ID</b> and (if applicable) <b>passwords</b> will appear — store them safely.</span>
       </div>
       <div id="result" class="out"></div>
     </div>
   </div>
 </main>
-<footer>© 2025 Gelecek Kasası — Verileriniz AES-256-GCM ve Google KMS ile korunur. İletişim: info@example.com — <a href="https://github.com/cebiromerfaruk/lockeduntil" style="color:inherit;">GitHub</a></footer>
+<footer>© 2025 Future Vault — Your data is protected with AES-256-GCM and Google KMS. Contact: info@example.com — <a href="https://github.com/cebiromerfaruk/lockeduntil" style="color:inherit;">GitHub</a></footer>
 <script>
-  const API_BASE = ''; // aynı origin
+  const API_BASE = ''; // same origin
   function genPassword(){ const a=new Uint8Array(16); crypto.getRandomValues(a); return btoa(String.fromCharCode(...a)); }
 
   const useDateEl = document.getElementById('useDate');
@@ -156,9 +156,9 @@
 
     const out = document.getElementById('result'); out.style.display='none'; out.innerHTML='';
 
-    if(!secret.trim()) return alert('Gizli metin gerekli');
-    if(useDate && !unlockDate) return alert('Erişim tarihi gerekli');
-    if(!email) return alert('E-posta gerekli');
+    if(!secret.trim()) return alert('Secret text required');
+    if(useDate && !unlockDate) return alert('Unlock date required');
+    if(!email) return alert('Email required');
     if(!masterPass) masterPass = genPassword();
     if(!viewPass) viewPass = genPassword();
 
@@ -168,18 +168,18 @@
         body: JSON.stringify({ title, secret, unlockDate: useDate ? unlockDate : null, email, masterPass, viewPass })
       });
       const j = await res.json();
-      if(!res.ok) throw new Error(j.error || 'Kayıt başarısız');
+      if(!res.ok) throw new Error(j.error || 'Save failed');
 
       out.style.display='block';
       out.innerHTML =
         `<div><b>ID:</b> ${j.id}</div>`+
-        `<div><b>Master Parola:</b> ${j.masterPass}</div>`+
-        `<div><b>Görüntüleme Parolası:</b> ${j.viewPass}</div>`+
-        `<div class="muted">Bu bilgileri güvenle saklayın. Geri almak için <b>Geri Al</b> sayfasında kullanacaksınız.</div>`;
+        `<div><b>Master Password:</b> ${j.masterPass}</div>`+
+        `<div><b>View Password:</b> ${j.viewPass}</div>`+
+        `<div class="muted">Store this information safely. You will use it on the <b>Retrieve</b> page.</div>`;
       document.getElementById('secret').value='';
     }catch(e){
       out.style.display='block';
-      out.innerHTML = `<span class="err">Hata:</span> ${e.message}`;
+      out.innerHTML = `<span class="err">Error:</span> ${e.message}`;
     }
   });
 </script>

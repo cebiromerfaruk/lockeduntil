@@ -1,20 +1,20 @@
 <!doctype html>
-<html lang="tr">
+<html lang="en">
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Geri Al | Zaman Kilitli Güvenli Paylaşım</title>
-<meta name="description" content="Zaman kilitli kasada saklanan veriyi time-locked vault mantığıyla ID ve parola ile geri alın. Güvenli veri teslimi." />
-<link rel="canonical" href="https://timelockedvault.example/retrieve.html" />
-<meta property="og:title" content="Geri Al - Gelecek Kasası" />
-<meta property="og:description" content="Zaman kilitli paylaşımdaki verinizi time-locked vault mantığıyla kimlik ve parola ile güvenle geri alın." />
+<title>Retrieve | Time-Locked Secure Sharing</title>
+<meta name="description" content="Retrieve data stored in the time-locked vault using ID and password. Secure data delivery." />
+<link rel="canonical" href="https://timelockedvault.example/en/retrieve.html" />
+<meta property="og:title" content="Retrieve - Future Vault" />
+<meta property="og:description" content="Securely retrieve your data from the time-locked vault using identity and password." />
 <meta property="og:type" content="website" />
-<meta property="og:url" content="https://timelockedvault.example/retrieve.html" />
-<meta property="og:site_name" content="Gelecek Kasası" />
+<meta property="og:url" content="https://timelockedvault.example/en/retrieve.html" />
+<meta property="og:site_name" content="Future Vault" />
 <meta property="og:image" content="https://timelockedvault.example/og-image.png" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Geri Al - Gelecek Kasası" />
-<meta name="twitter:description" content="Zaman kilitli paylaşımdaki verinizi time-locked vault mantığıyla kimlik ve parola ile güvenle geri alın." />
+<meta name="twitter:title" content="Retrieve - Future Vault" />
+<meta name="twitter:description" content="Securely retrieve your data from the time-locked vault using identity and password." />
 <meta name="twitter:image" content="https://timelockedvault.example/og-image.png" />
 <style>
   :root{--bg1:#0f172a;--bg2:#f97316;--ink:#ffffff;--edge:rgba(255,255,255,.12);--btn:#10b981;--btn2:rgba(255,255,255,.06);}
@@ -51,7 +51,7 @@
 {
  "@context":"https://schema.org",
  "@type":"Organization",
- "name":"Gelecek Kasası",
+ "name":"Future Vault",
  "url":"https://timelockedvault.example/",
  "contactPoint":[{"@type":"ContactPoint","email":"info@timelockedvault.example","contactType":"customer support"}]
 }
@@ -72,39 +72,39 @@
 <body>
 <header>
   <div class="nav">
-    <a class="logo" href="./index.html"><img src="./logo.svg" alt="Gelecek Kasası logo"></a>
+    <a class="logo" href="./index.html"><img src="../logo.svg" alt="Future Vault logo"></a>
     <nav>
-      <a href="./index.html">Ana Sayfa</a>
-      <a href="./use-cases.html">Kullanım Senaryoları</a>
-      <a href="./neden-guvenebilirsiniz.html">Neden Güvenebilirsiniz</a>
-      <a href="./encrypt.html">Kaydet</a>
-      <a href="./retrieve.html">Geri Al</a>
-          <a href="./en/retrieve.html" lang="en">English</a>
+      <a href="./index.html">Home</a>
+      <a href="./use-cases.html">Use Cases</a>
+      <a href="./why-trust.html">Why Trust Us</a>
+      <a href="./encrypt.html">Save</a>
+      <a href="./retrieve.html">Retrieve</a>
+      <a href="../retrieve.html" lang="tr">Türkçe</a>
     </nav>
   </div>
 </header>
 <main>
   <div class="wrap">
     <div class="intro">
-      <p>Bu sayfada daha önce saklanan verileri kimlik ve parola ile geri alırsınız. Zaman kilidi belirlenmişse erişim günü gelmeden içerik gösterilmez.</p>
-      <p><a href="./index.html">Ana sayfa</a> · <a href="./use-cases.html">Kullanım senaryoları</a></p>
+      <p>On this page you retrieve previously stored data using the ID and password. If a time lock is set, the content will not be shown before the unlock day.</p>
+      <p><a href="./index.html">Home</a> · <a href="./use-cases.html">Use Cases</a></p>
     </div>
     <div class="card">
-      <h1>🔓 Geri Al</h1>
-      <label>Kayıt ID’si</label>
-      <input id="idInput" placeholder="ör. k4k9ab12cd34" />
-      <label>Parola</label>
-      <input id="passInput" placeholder="Kaydederken verilen parola" />
+      <h1>🔓 Retrieve</h1>
+      <label>Record ID</label>
+      <input id="idInput" placeholder="e.g. k4k9ab12cd34" />
+      <label>Password</label>
+      <input id="passInput" placeholder="Password given at save time" />
       <div class="actions">
-        <button id="getBtn" class="btn">Veriyi Göster</button>
+        <button id="getBtn" class="btn">Show Data</button>
       </div>
       <div id="result" class="out"></div>
     </div>
   </div>
 </main>
-<footer>© 2025 Gelecek Kasası — Verileriniz AES-256-GCM ve Google KMS ile korunur. İletişim: info@example.com — <a href="https://github.com/cebiromerfaruk/lockeduntil" style="color:inherit;">GitHub</a></footer>
+<footer>© 2025 Future Vault — Your data is protected with AES-256-GCM and Google KMS. Contact: info@example.com — <a href="https://github.com/cebiromerfaruk/lockeduntil" style="color:inherit;">GitHub</a></footer>
 <script>
-  const API_BASE = ''; // aynı origin
+  const API_BASE = ''; // same origin
   function show(outEl, html){ outEl.style.display='block'; outEl.innerHTML = html; }
 
   document.getElementById('getBtn').addEventListener('click', async ()=>{
@@ -112,8 +112,8 @@
     const passphrase = document.getElementById('passInput').value;
     const out = document.getElementById('result'); out.style.display='none'; out.innerHTML='';
 
-    if(!id) return alert('ID gerekli');
-    if(!passphrase) return alert('Parola gerekli');
+    if(!id) return alert('ID required');
+    if(!passphrase) return alert('Password required');
 
     try{
       const url = API_BASE + '/api/get/' + encodeURIComponent(id);
@@ -131,7 +131,7 @@
         if(res.status === 403){
           show(out, msg);
         } else {
-          show(out, `<span class="err">Hata:</span> ${msg}`);
+          show(out, `<span class="err">Error:</span> ${msg}`);
         }
         return;
       }
@@ -139,15 +139,15 @@
       if(j.owner){
         let html = '';
         if(j.secret){
-          html += `<div><b>Başlık:</b> ${j.title || '-'}</div>`;
-          html += `<div style="margin-top:8px"><b>Gizli metin:</b></div>`;
+          html += `<div><b>Title:</b> ${j.title || '-'}</div>`;
+          html += `<div style="margin-top:8px"><b>Secret text:</b></div>`;
           html += `<pre style="white-space:pre-wrap;margin:6px 0 0 0">${j.secret}</pre>`;
         }else if(j.message){
           html += j.message;
         }
-        html += `<div style=\"margin-top:10px\"><label>E-posta</label><input id=\"updEmail\" value=\"${j.email || ''}\" /></div>`;
-        html += `<div style=\"margin-top:10px\"><label>Erişim Tarihi</label><input id=\"updDate\" type=\"date\" value=\"${j.unlockDate || ''}\" /></div>`;
-        html += `<div class=\"actions\" style=\"margin-top:10px\"><button id=\"updBtn\" class=\"btn\">Güncelle</button><button id=\"delBtn\" class=\"btn\" style=\"background:#ef4444\">Sil</button></div>`;
+        html += `<div style=\"margin-top:10px\"><label>Email</label><input id=\"updEmail\" value=\"${j.email || ''}\" /></div>`;
+        html += `<div style=\"margin-top:10px\"><label>Unlock Date</label><input id=\"updDate\" type=\"date\" value=\"${j.unlockDate || ''}\" /></div>`;
+        html += `<div class=\"actions\" style=\"margin-top:10px\"><button id=\"updBtn\" class=\"btn\">Update</button><button id=\"delBtn\" class=\"btn\" style=\"background:#ef4444\">Delete</button></div>`;
         show(out, html);
         let todayStr = new Date().toISOString().split('T')[0];
         try{
@@ -166,31 +166,31 @@
               body: JSON.stringify({ passphrase, email, unlockDate })
             });
             const j2 = await res2.json();
-            if(!res2.ok) throw new Error(j2.error || 'Güncelleme başarısız');
-            show(out, 'Güncellendi');
+            if(!res2.ok) throw new Error(j2.error || 'Update failed');
+            show(out, 'Updated');
           }catch(e){
-            show(out, `<span class=\"err\">Hata:</span> ${e.message}`);
+            show(out, `<span class=\"err\">Error:</span> ${e.message}`);
           }
         });
         document.getElementById('delBtn').addEventListener('click', async ()=>{
-          if(!confirm('Bu kayıt kalıcı olarak silinecek. Emin misiniz?')) return;
+          if(!confirm('This record will be permanently deleted. Are you sure?')) return;
           try{
             const res3 = await fetch(API_BASE + '/api/delete/' + encodeURIComponent(id), {
               method:'POST', headers:{'Content-Type':'application/json'},
               body: JSON.stringify({ passphrase })
             });
             const j3 = await res3.json();
-            if(!res3.ok) throw new Error(j3.error || 'Silme başarısız');
-            show(out, 'Kayıt silindi');
+            if(!res3.ok) throw new Error(j3.error || 'Delete failed');
+            show(out, 'Record deleted');
           }catch(e){
-            show(out, `<span class=\"err\">Hata:</span> ${e.message}`);
+            show(out, `<span class=\"err\">Error:</span> ${e.message}`);
           }
         });
       } else {
-        show(out, `<div><b>Başlık:</b> ${j.title || '-'}</div><div style=\"margin-top:8px\"><b>Gizli metin:</b></div><pre style=\"white-space:pre-wrap;margin:6px 0 0 0\">${j.secret}</pre>`);
+        show(out, `<div><b>Title:</b> ${j.title || '-'}</div><div style=\"margin-top:8px\"><b>Secret text:</b></div><pre style=\"white-space:pre-wrap;margin:6px 0 0 0\">${j.secret}</pre>`);
       }
     }catch(e){
-      show(out, `<span class=\"err\">Hata:</span> ${e.message}`);
+      show(out, `<span class=\"err\">Error:</span> ${e.message}`);
     }
   });
 </script>
