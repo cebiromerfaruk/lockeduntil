@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">KilidiAçılanaKadar</string>
+    <string name="store_title">Gizli Metni Kaydet</string>
+    <string name="hint_secret">Gizli metin</string>
+    <string name="hint_email">E-posta</string>
+    <string name="hint_master">Ana parola</string>
+    <string name="hint_view">Görüntüleme parolası</string>
+    <string name="hint_date">Açılma tarihi (YYYY-AA-GG)</string>
+    <string name="store_button">Kaydet</string>
+    <string name="retrieve_title">Gizli Metni Çöz</string>
+    <string name="hint_id">ID</string>
+    <string name="hint_password">Parola</string>
+    <string name="retrieve_button">Çöz</string>
+</resources>

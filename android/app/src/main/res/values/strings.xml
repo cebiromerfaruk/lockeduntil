@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">LockedUntil</string>
+    <string name="store_title">Store Secret</string>
+    <string name="hint_secret">Secret text</string>
+    <string name="hint_email">Email</string>
+    <string name="hint_master">Master password</string>
+    <string name="hint_view">View password</string>
+    <string name="hint_date">Unlock date (YYYY-MM-DD)</string>
+    <string name="store_button">Store</string>
+    <string name="retrieve_title">Retrieve Secret</string>
+    <string name="hint_id">ID</string>
+    <string name="hint_password">Password</string>
+    <string name="retrieve_button">Retrieve</string>
+</resources>
