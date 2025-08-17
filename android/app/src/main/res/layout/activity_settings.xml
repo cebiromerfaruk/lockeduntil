@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:text="@string/home_button"
             android:background="@drawable/button_bg"
-            android:backgroundTint="@null"
+            android:backgroundTint="@android:color/transparent"
             android:textColor="#071019" />
     </LinearLayout>
 

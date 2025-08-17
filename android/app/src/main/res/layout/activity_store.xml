@@ -21,7 +21,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/home_button"
                 android:background="@drawable/button_bg"
-                android:backgroundTint="@null"
+                android:backgroundTint="@android:color/transparent"
                 android:textColor="#071019" />
 
             <View
@@ -34,7 +34,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_bg"
-                android:backgroundTint="@null"
+                android:backgroundTint="@android:color/transparent"
                 android:src="@android:drawable/ic_menu_manage"
                 android:contentDescription="@string/settings" />
         </LinearLayout>
@@ -104,7 +104,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/store_button"
             android:background="@drawable/button_bg"
-            android:backgroundTint="@null"
+            android:backgroundTint="@android:color/transparent"
             android:textColor="#071019"/>
 
         <TextView
