@@ -47,6 +47,19 @@
             android:textStyle="bold"
             android:textSize="24sp" />
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/store_desc" />
+
+        <EditText
+            android:id="@+id/titleInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_title"
+            android:textColorHint="#9AA0A6"/>
+
         <EditText
             android:id="@+id/secretInput"
             android:layout_width="match_parent"
@@ -80,6 +93,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/hint_date"
+            android:focusable="false"
+            android:clickable="true"
             android:textColorHint="#9AA0A6"/>
 
         <Button

@@ -7,7 +7,10 @@
     <string name="hint_view">Görüntüleme parolası</string>
     <string name="hint_date">Açılma tarihi (YYYY-AA-GG)</string>
     <string name="store_button">Kaydet</string>
+    <string name="store_desc">Bu sayfada yeni bir kayıt oluşturur, dilerseniz erişim tarihini belirleyerek veriyi zaman kilitli hale getirirsiniz.</string>
+    <string name="hint_title">Başlık</string>
     <string name="retrieve_title">🔓 Geri Al</string>
+    <string name="retrieve_desc">Bu sayfada daha önce saklanan verileri kimlik ve parola ile geri alırsınız. Zaman kilidi belirlenmişse erişim günü gelmeden içerik gösterilmez.</string>
     <string name="hint_id">ID</string>
     <string name="hint_password">Parola</string>
     <string name="retrieve_button">Çöz</string>

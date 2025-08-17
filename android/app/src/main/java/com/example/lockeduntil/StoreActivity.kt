@@ -1,5 +1,6 @@
 package com.lockeduntil.app
 
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
@@ -7,6 +8,7 @@ import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import java.util.Calendar
 import java.util.Locale
 import org.json.JSONObject
 import okhttp3.Call
@@ -28,6 +30,7 @@ class StoreActivity : AppCompatActivity() {
 
         val lang = if (Locale.getDefault().language == "tr") "tr" else "en"
 
+        val titleInput = findViewById<EditText>(R.id.titleInput)
         val secretInput = findViewById<EditText>(R.id.secretInput)
         val emailInput = findViewById<EditText>(R.id.emailInput)
         val masterPassInput = findViewById<EditText>(R.id.masterPassInput)
@@ -43,8 +46,24 @@ class StoreActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        dateInput.setOnClickListener {
+            val calendar = Calendar.getInstance()
+            DatePickerDialog(
+                this,
+                { _, year, month, dayOfMonth ->
+                    val m = (month + 1).toString().padStart(2, '0')
+                    val d = dayOfMonth.toString().padStart(2, '0')
+                    dateInput.setText("$year-$m-$d")
+                },
+                calendar.get(Calendar.YEAR),
+                calendar.get(Calendar.MONTH),
+                calendar.get(Calendar.DAY_OF_MONTH)
+            ).show()
+        }
+
         storeButton.setOnClickListener {
             val json = JSONObject().apply {
+                put("title", titleInput.text.toString())
                 put("secret", secretInput.text.toString())
                 put("email", emailInput.text.toString())
                 put("masterPass", masterPassInput.text.toString())

@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient">
+    android:background="@drawable/background_gradient_retrieve">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,6 +46,12 @@
             android:text="@string/retrieve_title"
             android:textStyle="bold"
             android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/retrieve_desc" />
 
         <EditText
             android:id="@+id/idInput"

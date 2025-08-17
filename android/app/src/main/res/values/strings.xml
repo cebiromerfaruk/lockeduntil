@@ -7,7 +7,10 @@
     <string name="hint_view">View password</string>
     <string name="hint_date">Unlock date (YYYY-MM-DD)</string>
     <string name="store_button">Store</string>
+    <string name="store_desc">On this page you create a new record; optionally specify an access date to time-lock the data.</string>
+    <string name="hint_title">Title</string>
     <string name="retrieve_title">🔓 Retrieve</string>
+    <string name="retrieve_desc">On this page you retrieve previously stored data with ID and password. If a time lock is set, the content is not shown before the access day.</string>
     <string name="hint_id">ID</string>
     <string name="hint_password">Password</string>
     <string name="retrieve_button">Retrieve</string>
