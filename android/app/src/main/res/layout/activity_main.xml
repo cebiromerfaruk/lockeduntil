@@ -9,6 +9,19 @@
         android:orientation="vertical"
         android:padding="16dp">
 
+        <Button
+            android:id="@+id/useCasesButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/use_cases_button" />
+
+        <Button
+            android:id="@+id/whyTrustButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/why_trust_button" />
+
         <TextView
             android:id="@+id/storeTitle"
             android:layout_width="wrap_content"

@@ -17,6 +17,9 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".UseCasesActivity" />
+        <activity android:name=".WhyTrustActivity" />
+
     </application>
 
 </manifest>

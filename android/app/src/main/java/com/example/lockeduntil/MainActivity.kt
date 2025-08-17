@@ -1,5 +1,6 @@
 package com.lockeduntil.app
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
@@ -41,6 +42,17 @@ class MainActivity : AppCompatActivity() {
         val passInput = findViewById<EditText>(R.id.passInput)
         val retrieveButton = findViewById<Button>(R.id.retrieveButton)
         val retrieveResult = findViewById<TextView>(R.id.retrieveResult)
+
+        val useCasesButton = findViewById<Button>(R.id.useCasesButton)
+        val whyTrustButton = findViewById<Button>(R.id.whyTrustButton)
+
+        useCasesButton.setOnClickListener {
+            startActivity(Intent(this, UseCasesActivity::class.java))
+        }
+
+        whyTrustButton.setOnClickListener {
+            startActivity(Intent(this, WhyTrustActivity::class.java))
+        }
 
         storeButton.setOnClickListener {
             val json = JSONObject().apply {
