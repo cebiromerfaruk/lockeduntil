@@ -37,7 +37,7 @@ class SettingsActivity : AppCompatActivity() {
             override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
                 if (first) { first = false; return }
                 val lang = if (position == 1) "tr" else "en"
-                LanguageUtils.setLanguage(this@SettingsActivity, lang)
+                LanguageUtils.setLanguage(lang, this@SettingsActivity)
                 startActivity(Intent(this@SettingsActivity, MainActivity::class.java))
                 finish()
             }

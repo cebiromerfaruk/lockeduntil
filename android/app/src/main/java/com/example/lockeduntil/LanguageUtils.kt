@@ -1,15 +1,13 @@
 package com.lockeduntil.app
 
 import android.app.Activity
-import java.util.Locale
+import androidx.appcompat.app.AppCompatDelegate
+import androidx.core.os.LocaleListCompat
 
 object LanguageUtils {
-    fun setLanguage(activity: Activity, lang: String) {
-        val newLocale = Locale(lang)
-        Locale.setDefault(newLocale)
-        val config = activity.resources.configuration
-        config.setLocale(newLocale)
-        activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
-        activity.applicationContext.resources.updateConfiguration(config, activity.resources.displayMetrics)
+    fun setLanguage(lang: String, recreateActivity: Activity? = null) {
+        val locales = LocaleListCompat.forLanguageTags(lang) // "tr", "en-US"...
+        AppCompatDelegate.setApplicationLocales(locales)
+        recreateActivity?.recreate()
     }
 }
