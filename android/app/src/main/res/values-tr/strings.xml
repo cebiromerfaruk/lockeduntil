@@ -16,8 +16,8 @@
     <string name="home_why_trust">Neden Güvenmelisiniz</string>
     <string name="home_use_cases">Kullanım Senaryoları</string>
     <string name="why_trust_title">Neden Güvenebilirsiniz?</string>
-    <string name="why_trust_p1">Tüm kaynak kodu GitHub'da açık.</string>
-    <string name="why_trust_p2">Şifreler ve ID'ler sunucuda saklanmaz.</string>
+    <string name="why_trust_p1">Tüm kaynak kodu GitHub&#39;da açık.</string>
+    <string name="why_trust_p2">Şifreler ve ID&#39;ler sunucuda saklanmaz.</string>
     <string name="why_trust_p3">Veriler gönderilmeden önce cihazınızda şifrelenir.</string>
     <string name="use_cases_title">Kullanım Senaryoları</string>
     <string name="case_invest_title">Yatırım Disiplini</string>
