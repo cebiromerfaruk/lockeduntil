@@ -18,6 +18,8 @@
         </activity>
 
         <activity android:name=".UseCasesActivity" />
+        <activity android:name=".StoreActivity" />
+        <activity android:name=".RetrieveActivity" />
         <activity android:name=".WhyTrustActivity" />
 
     </application>

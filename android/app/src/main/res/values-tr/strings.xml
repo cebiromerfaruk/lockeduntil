@@ -37,6 +37,6 @@
     <string name="use_cases_valuable_ethics">Etik Not: Paylaşılan bilgiler için tüm tarafların rızası ve yasal uygunluk sağlanmalıdır.</string>
     <string name="why_trust_title">Neden Güvenebilirsiniz?</string>
     <string name="why_trust_para1">Bu projenin tüm kaynak kodu herkese açıktır. Dilediğiniz zaman incelemek için GitHub deposunu ziyaret edebilirsiniz.</string>
-    <string name="why_trust_para2">Şifreler ve ID'ler hiçbir şekilde sunucuda kaydedilmez. Veriler tarayıcınızda şifrelenir ve sunucuya yalnızca şifreli hâli gönderilir.</string>
+    <string name="why_trust_para2">Şifreler ve ID’ler hiçbir şekilde sunucuda kaydedilmez. Veriler tarayıcınızda şifrelenir ve sunucuya yalnızca şifreli hâli gönderilir.</string>
     <string name="why_trust_para3">Böylece kimlik bilgileriniz ve parolalarınız bizim sistemlerimizde tutulmadan güvende kalır.</string>
 </resources>
