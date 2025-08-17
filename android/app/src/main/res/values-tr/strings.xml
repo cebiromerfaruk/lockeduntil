@@ -11,4 +11,23 @@
     <string name="hint_id">ID</string>
     <string name="hint_password">Parola</string>
     <string name="retrieve_button">Çöz</string>
+    <string name="home_store">Kaydet</string>
+    <string name="home_retrieve">Geri Al</string>
+    <string name="home_why_trust">Neden Güvenmelisiniz</string>
+    <string name="home_use_cases">Kullanım Senaryoları</string>
+    <string name="why_trust_title">Neden Güvenebilirsiniz?</string>
+    <string name="why_trust_p1">Tüm kaynak kodu GitHub'da açık.</string>
+    <string name="why_trust_p2">Şifreler ve ID'ler sunucuda saklanmaz.</string>
+    <string name="why_trust_p3">Veriler gönderilmeden önce cihazınızda şifrelenir.</string>
+    <string name="use_cases_title">Kullanım Senaryoları</string>
+    <string name="case_invest_title">Yatırım Disiplini</string>
+    <string name="case_invest_desc">Panik satışını önlemek için talimatları kilitleyin.</string>
+    <string name="case_will_title">Vasiyet / Son İstek</string>
+    <string name="case_will_desc">Son dileklerinizi güvenle saklayın.</string>
+    <string name="case_emergency_title">Acil Durum Paylaşımı</string>
+    <string name="case_emergency_desc">Size bir şey olursa kritik verileri iletin.</string>
+    <string name="case_exposure_title">Tehdit / İfşa Senaryosu</string>
+    <string name="case_exposure_desc">Delilleri gerektiğinde ortaya çıkarın.</string>
+    <string name="case_treasure_title">Kıymetli Emanet Bildirimi</string>
+    <string name="case_treasure_desc">Kıymetli eşyaların yerini güvenle paylaşın.</string>
 </resources>

@@ -8,6 +8,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.LockedUntil">
 
+        <activity android:name=".StoreActivity" />
+        <activity android:name=".RetrieveActivity" />
+        <activity android:name=".WhyTrustActivity" />
+        <activity android:name=".UseCasesActivity" />
         <activity
             android:name=".MainActivity"
             android:exported="true">   <!-- Android 12+ zorunlu -->

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/bg_dark">
+
+    <Button
+        android:id="@+id/btnStore"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_store"
+        android:backgroundTint="@color/teal"
+        android:textColor="@color/white" />
+
+    <Button
+        android:id="@+id/btnRetrieve"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_retrieve"
+        android:backgroundTint="@color/orange"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnWhyTrust"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_why_trust"
+        android:backgroundTint="@color/teal"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/btnUseCases"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/home_use_cases"
+        android:backgroundTint="@color/teal"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>

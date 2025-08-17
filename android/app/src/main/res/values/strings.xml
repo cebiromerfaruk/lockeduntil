@@ -11,4 +11,23 @@
     <string name="hint_id">ID</string>
     <string name="hint_password">Password</string>
     <string name="retrieve_button">Retrieve</string>
+    <string name="home_store">Store</string>
+    <string name="home_retrieve">Retrieve</string>
+    <string name="home_why_trust">Why Trust</string>
+    <string name="home_use_cases">Use Cases</string>
+    <string name="why_trust_title">Why Trust?</string>
+    <string name="why_trust_p1">All source code is open on GitHub.</string>
+    <string name="why_trust_p2">Secrets and IDs are never stored on the server.</string>
+    <string name="why_trust_p3">Data is encrypted on your device before sending.</string>
+    <string name="use_cases_title">Use Cases</string>
+    <string name="case_invest_title">Investment Discipline</string>
+    <string name="case_invest_desc">Lock instructions to avoid panic selling.</string>
+    <string name="case_will_title">Will / Final Wish</string>
+    <string name="case_will_desc">Store your last wishes securely.</string>
+    <string name="case_emergency_title">Emergency Sharing</string>
+    <string name="case_emergency_desc">Deliver critical data if something happens.</string>
+    <string name="case_exposure_title">Threat / Exposure Scenario</string>
+    <string name="case_exposure_desc">Release evidence only when needed.</string>
+    <string name="case_treasure_title">Precious Deposit Notice</string>
+    <string name="case_treasure_desc">Share the location of valuables safely.</string>
 </resources>
