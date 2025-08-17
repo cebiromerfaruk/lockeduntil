@@ -14,7 +14,6 @@ class MainActivity : AppCompatActivity() {
         val storeButton = findViewById<Button>(R.id.storeActivityButton)
         val retrieveButton = findViewById<Button>(R.id.retrieveActivityButton)
         val useCasesButton = findViewById<Button>(R.id.useCasesButton)
-        val whyTrustButton = findViewById<Button>(R.id.whyTrustButton)
         val settingsButton = findViewById<ImageButton>(R.id.settingsButton)
 
         storeButton.setOnClickListener {
@@ -27,10 +26,6 @@ class MainActivity : AppCompatActivity() {
 
         useCasesButton.setOnClickListener {
             startActivity(Intent(this, UseCasesActivity::class.java))
-        }
-
-        whyTrustButton.setOnClickListener {
-            startActivity(Intent(this, WhyTrustActivity::class.java))
         }
 
         settingsButton.setOnClickListener {

@@ -18,6 +18,9 @@
     <string name="why_trust_button">🛡️ Neden Güvenebilirsiniz</string>
     <string name="home_button">Ana Sayfa</string>
     <string name="toggle_language">Dili Değiştir</string>
+    <string name="home_store_desc">Metninizi veya talimatınızı şifreleyip zaman kilidi ekleyin. Belirlediğiniz tarih gelene kadar erişim mümkün değildir.</string>
+    <string name="home_retrieve_desc">Kimlik bilgileri ve parolanızla kayıtlı içeriği alın. Zaman kilidi varsa erişim tarihi beklenmelidir.</string>
+    <string name="home_use_cases_desc">Vasiyet metni, acil durum paylaşımı veya panik satış önleme gibi farklı senaryoları keşfedin.</string>
     <string name="use_cases_title">Kullanım Senaryoları</string>
     <string name="use_cases_investment_title">Yatırım Disiplini</string>
     <string name="use_cases_investment_desc">Panik satışını önlemek için kendi talimatlarınızı geleceğe kilitleyerek duygusal kararları sınırlandırır.</string>

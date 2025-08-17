@@ -18,6 +18,9 @@
     <string name="why_trust_button">🛡️ Why Trust</string>
     <string name="home_button">Home</string>
     <string name="toggle_language">Switch Language</string>
+    <string name="home_store_desc">Encrypt your text or instructions and add a time lock. Until your set date arrives, access is impossible.</string>
+    <string name="home_retrieve_desc">Retrieve stored content with your ID and password. If a time lock is set, you must wait for its date.</string>
+    <string name="home_use_cases_desc">Explore scenarios such as will messages, emergency sharing, or preventing panic selling.</string>
     <string name="use_cases_title">Use Cases</string>
     <string name="use_cases_investment_title">Investment Discipline</string>
     <string name="use_cases_investment_desc">Lock your own instructions to the future to limit emotional decisions and prevent panic selling.</string>

@@ -31,62 +31,90 @@
         android:layout_marginTop="4dp"
         android:text="@string/tagline_sub" />
 
-    <GridLayout
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:layout_gravity="center"
-        android:columnCount="2"
-        android:rowCount="2"
-        android:alignmentMode="alignMargins"
-        android:rowOrderPreserved="false">
+        android:orientation="vertical">
 
-        <Button
-            android:id="@+id/storeActivityButton"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="8dp"
-            android:layout_gravity="center"
-            android:text="@string/store_title"
-            android:background="@drawable/button_bg"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="#071019" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/card_bg"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="16dp">
 
-        <Button
-            android:id="@+id/retrieveActivityButton"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="8dp"
-            android:layout_gravity="center"
-            android:text="@string/retrieve_title"
-            android:background="@drawable/button_bg"
-            android:backgroundTint="@android:color/transparent"
-            android:drawableTop="@drawable/ic_lock_open"
-            android:drawablePadding="4dp"
-            android:textColor="#071019" />
+            <Button
+                android:id="@+id/storeActivityButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@string/store_title"
+                android:textColor="@android:color/white" />
 
-        <Button
-            android:id="@+id/useCasesButton"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="8dp"
-            android:layout_gravity="center"
-            android:text="@string/use_cases_button"
-            android:background="@drawable/button_bg"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="#071019" />
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/home_store_desc" />
 
-        <Button
-            android:id="@+id/whyTrustButton"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_margin="8dp"
-            android:layout_gravity="center"
-            android:text="@string/why_trust_button"
-            android:background="@drawable/button_bg"
-            android:backgroundTint="@android:color/transparent"
-            android:textColor="#071019" />
+        </LinearLayout>
 
-    </GridLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/card_bg"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <Button
+                android:id="@+id/retrieveActivityButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@string/retrieve_title"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/home_retrieve_desc" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/card_bg"
+            android:elevation="2dp"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <Button
+                android:id="@+id/useCasesButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_bg"
+                android:backgroundTint="@android:color/transparent"
+                android:text="@string/use_cases_button"
+                android:textColor="@android:color/white" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="@string/home_use_cases_desc" />
+
+        </LinearLayout>
+
+    </LinearLayout>
 
 </LinearLayout>
