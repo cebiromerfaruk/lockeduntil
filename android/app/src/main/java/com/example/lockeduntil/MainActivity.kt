@@ -3,8 +3,8 @@ package com.lockeduntil.app
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.lockeduntil.app.LanguageUtils
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
         val retrieveButton = findViewById<Button>(R.id.retrieveActivityButton)
         val useCasesButton = findViewById<Button>(R.id.useCasesButton)
         val whyTrustButton = findViewById<Button>(R.id.whyTrustButton)
-        val languageButton = findViewById<Button>(R.id.languageToggleButton)
+        val settingsButton = findViewById<ImageButton>(R.id.settingsButton)
 
         storeButton.setOnClickListener {
             startActivity(Intent(this, StoreActivity::class.java))
@@ -33,8 +33,8 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, WhyTrustActivity::class.java))
         }
 
-        languageButton.setOnClickListener {
-            LanguageUtils.toggleLanguage(this)
+        settingsButton.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
         }
     }
 }

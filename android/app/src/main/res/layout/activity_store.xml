@@ -21,6 +21,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/home_button"
                 android:background="@drawable/button_bg"
+                android:backgroundTint="@null"
                 android:textColor="#071019" />
 
             <View
@@ -28,13 +29,14 @@
                 android:layout_height="0dp"
                 android:layout_weight="1" />
 
-            <Button
-                android:id="@+id/languageToggleButton"
+            <ImageButton
+                android:id="@+id/settingsButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/toggle_language"
                 android:background="@drawable/button_bg"
-                android:textColor="#071019" />
+                android:backgroundTint="@null"
+                android:src="@android:drawable/ic_menu_manage"
+                android:contentDescription="@string/settings" />
         </LinearLayout>
 
         <TextView
@@ -49,31 +51,36 @@
             android:id="@+id/secretInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_secret"/>
+            android:hint="@string/hint_secret"
+            android:textColorHint="#9AA0A6"/>
 
         <EditText
             android:id="@+id/emailInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_email"/>
+            android:hint="@string/hint_email"
+            android:textColorHint="#9AA0A6"/>
 
         <EditText
             android:id="@+id/masterPassInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_master"/>
+            android:hint="@string/hint_master"
+            android:textColorHint="#9AA0A6"/>
 
         <EditText
             android:id="@+id/viewPassInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_view"/>
+            android:hint="@string/hint_view"
+            android:textColorHint="#9AA0A6"/>
 
         <EditText
             android:id="@+id/dateInput"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/hint_date"/>
+            android:hint="@string/hint_date"
+            android:textColorHint="#9AA0A6"/>
 
         <Button
             android:id="@+id/storeButton"
@@ -82,6 +89,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/store_button"
             android:background="@drawable/button_bg"
+            android:backgroundTint="@null"
             android:textColor="#071019"/>
 
         <TextView

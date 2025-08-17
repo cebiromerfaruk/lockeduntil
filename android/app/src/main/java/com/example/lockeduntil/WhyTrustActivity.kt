@@ -1,9 +1,10 @@
 package com.lockeduntil.app
 
 import android.os.Bundle
+import android.content.Intent
 import android.widget.Button
+import android.widget.ImageButton
 import androidx.appcompat.app.AppCompatActivity
-import com.lockeduntil.app.LanguageUtils
 
 class WhyTrustActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -11,9 +12,11 @@ class WhyTrustActivity : AppCompatActivity() {
         setContentView(R.layout.activity_why_trust)
 
         val homeButton = findViewById<Button>(R.id.homeButton)
-        val languageButton = findViewById<Button>(R.id.languageToggleButton)
+        val settingsButton = findViewById<ImageButton>(R.id.settingsButton)
 
         homeButton.setOnClickListener { finish() }
-        languageButton.setOnClickListener { LanguageUtils.toggleLanguage(this) }
+        settingsButton.setOnClickListener {
+            startActivity(Intent(this, SettingsActivity::class.java))
+        }
     }
 }

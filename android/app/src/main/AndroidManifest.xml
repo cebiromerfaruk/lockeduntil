@@ -21,6 +21,7 @@
         <activity android:name=".StoreActivity" />
         <activity android:name=".RetrieveActivity" />
         <activity android:name=".WhyTrustActivity" />
+        <activity android:name=".SettingsActivity" />
 
     </application>
 

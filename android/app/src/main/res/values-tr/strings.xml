@@ -40,4 +40,8 @@
     <string name="why_trust_para1">Bu projenin tüm kaynak kodu herkese açıktır. Dilediğiniz zaman incelemek için GitHub deposunu ziyaret edebilirsiniz.</string>
     <string name="why_trust_para2">Şifreler ve ID’ler hiçbir şekilde sunucuda kaydedilmez. Veriler tarayıcınızda şifrelenir ve sunucuya yalnızca şifreli hâli gönderilir.</string>
     <string name="why_trust_para3">Böylece kimlik bilgileriniz ve parolalarınız bizim sistemlerimizde tutulmadan güvende kalır.</string>
+    <string name="tagline_title">⏳🔒 Zaman Kilitli Güvenli Paylaşım</string>
+    <string name="tagline_sub">Kritik bilgileri, vasiyet metinlerini ve yatırım talimatlarını belirlediğiniz tarihe kadar erişilemez şekilde saklayın.</string>
+    <string name="settings">Ayarlar</string>
+    <string name="select_language">Dil seçimi</string>
 </resources>

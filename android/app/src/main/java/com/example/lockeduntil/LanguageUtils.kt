@@ -4,13 +4,12 @@ import android.app.Activity
 import java.util.Locale
 
 object LanguageUtils {
-    fun toggleLanguage(activity: Activity) {
-        val current = Locale.getDefault().language
-        val newLocale = if (current == "tr") Locale("en") else Locale("tr")
+    fun setLanguage(activity: Activity, lang: String) {
+        val newLocale = Locale(lang)
         Locale.setDefault(newLocale)
         val config = activity.resources.configuration
         config.setLocale(newLocale)
         activity.resources.updateConfiguration(config, activity.resources.displayMetrics)
-        activity.recreate()
+        activity.applicationContext.resources.updateConfiguration(config, activity.resources.displayMetrics)
     }
 }

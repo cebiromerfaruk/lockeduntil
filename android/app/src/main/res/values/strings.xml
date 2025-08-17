@@ -40,4 +40,8 @@
     <string name="why_trust_para1">All source code of this project is open to everyone. You can review it anytime by visiting the GitHub repository.</string>
     <string name="why_trust_para2">Passwords and IDs are never stored on the server. Data is encrypted in your browser and only the encrypted form is sent to the server.</string>
     <string name="why_trust_para3">This keeps your credentials and passwords safe without residing on our systems.</string>
+    <string name="tagline_title">⏳🔒 Time-Locked Secure Sharing</string>
+    <string name="tagline_sub">Store critical information, wills and investment instructions inaccessibly until the date you choose.</string>
+    <string name="settings">Settings</string>
+    <string name="select_language">Select language</string>
 </resources>
