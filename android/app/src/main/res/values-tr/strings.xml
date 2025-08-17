@@ -1,19 +1,20 @@
 <resources>
     <string name="app_name">KilidiAçılanaKadar</string>
-    <string name="store_title">Gizli Metni Kaydet</string>
+    <string name="store_title">🔒 Kaydet</string>
     <string name="hint_secret">Gizli metin</string>
     <string name="hint_email">E-posta</string>
     <string name="hint_master">Ana parola</string>
     <string name="hint_view">Görüntüleme parolası</string>
     <string name="hint_date">Açılma tarihi (YYYY-AA-GG)</string>
     <string name="store_button">Kaydet</string>
-    <string name="retrieve_title">Gizli Metni Çöz</string>
+    <string name="retrieve_title">🔓 Geri Al</string>
     <string name="hint_id">ID</string>
     <string name="hint_password">Parola</string>
     <string name="retrieve_button">Çöz</string>
-    <string name="use_cases_button">Kullanım Senaryoları</string>
-    <string name="why_trust_button">Neden Güvenebilirsiniz</string>
+    <string name="use_cases_button">📚 Kullanım Senaryoları</string>
+    <string name="why_trust_button">🛡️ Neden Güvenebilirsiniz</string>
     <string name="home_button">Ana Sayfa</string>
+    <string name="toggle_language">Dili Değiştir</string>
     <string name="use_cases_title">Kullanım Senaryoları</string>
     <string name="use_cases_investment_title">Yatırım Disiplini</string>
     <string name="use_cases_investment_desc">Panik satışını önlemek için kendi talimatlarınızı geleceğe kilitleyerek duygusal kararları sınırlandırır.</string>

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import androidx.appcompat.app.AppCompatActivity
+import com.lockeduntil.app.LanguageUtils
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -14,6 +15,7 @@ class MainActivity : AppCompatActivity() {
         val retrieveButton = findViewById<Button>(R.id.retrieveActivityButton)
         val useCasesButton = findViewById<Button>(R.id.useCasesButton)
         val whyTrustButton = findViewById<Button>(R.id.whyTrustButton)
+        val languageButton = findViewById<Button>(R.id.languageToggleButton)
 
         storeButton.setOnClickListener {
             startActivity(Intent(this, StoreActivity::class.java))
@@ -29,6 +31,10 @@ class MainActivity : AppCompatActivity() {
 
         whyTrustButton.setOnClickListener {
             startActivity(Intent(this, WhyTrustActivity::class.java))
+        }
+
+        languageButton.setOnClickListener {
+            LanguageUtils.toggleLanguage(this)
         }
     }
 }

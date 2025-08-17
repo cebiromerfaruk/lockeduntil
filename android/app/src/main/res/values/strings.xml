@@ -1,19 +1,20 @@
 <resources>
     <string name="app_name">LockedUntil</string>
-    <string name="store_title">Store Secret</string>
+    <string name="store_title">🔒 Save</string>
     <string name="hint_secret">Secret text</string>
     <string name="hint_email">Email</string>
     <string name="hint_master">Master password</string>
     <string name="hint_view">View password</string>
     <string name="hint_date">Unlock date (YYYY-MM-DD)</string>
     <string name="store_button">Store</string>
-    <string name="retrieve_title">Retrieve Secret</string>
+    <string name="retrieve_title">🔓 Retrieve</string>
     <string name="hint_id">ID</string>
     <string name="hint_password">Password</string>
     <string name="retrieve_button">Retrieve</string>
-    <string name="use_cases_button">Use Cases</string>
-    <string name="why_trust_button">Why Trust Us</string>
+    <string name="use_cases_button">📚 Use Cases</string>
+    <string name="why_trust_button">🛡️ Why Trust</string>
     <string name="home_button">Home</string>
+    <string name="toggle_language">Switch Language</string>
     <string name="use_cases_title">Use Cases</string>
     <string name="use_cases_investment_title">Investment Discipline</string>
     <string name="use_cases_investment_desc">Lock your own instructions to the future to limit emotional decisions and prevent panic selling.</string>

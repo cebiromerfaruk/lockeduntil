@@ -6,6 +6,7 @@ import android.widget.EditText
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import java.util.Locale
+import com.lockeduntil.app.LanguageUtils
 import org.json.JSONObject
 import okhttp3.Call
 import okhttp3.Callback
@@ -34,8 +35,10 @@ class StoreActivity : AppCompatActivity() {
         val storeButton = findViewById<Button>(R.id.storeButton)
         val storeResult = findViewById<TextView>(R.id.storeResult)
         val homeButton = findViewById<Button>(R.id.homeButton)
+        val languageButton = findViewById<Button>(R.id.languageToggleButton)
 
         homeButton.setOnClickListener { finish() }
+        languageButton.setOnClickListener { LanguageUtils.toggleLanguage(this) }
 
         storeButton.setOnClickListener {
             val json = JSONObject().apply {

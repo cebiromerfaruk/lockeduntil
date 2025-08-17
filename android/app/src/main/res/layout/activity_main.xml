@@ -3,33 +3,52 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background_gradient">
+
+    <Button
+        android:id="@+id/languageToggleButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end"
+        android:text="@string/toggle_language"
+        android:background="@drawable/button_bg"
+        android:textColor="#071019" />
 
     <Button
         android:id="@+id/storeActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/store_title" />
+        android:layout_marginTop="16dp"
+        android:text="@string/store_title"
+        android:background="@drawable/button_bg"
+        android:textColor="#071019" />
 
     <Button
         android:id="@+id/retrieveActivityButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/retrieve_title" />
+        android:text="@string/retrieve_title"
+        android:background="@drawable/button_bg"
+        android:textColor="#071019" />
 
     <Button
         android:id="@+id/useCasesButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/use_cases_button" />
+        android:text="@string/use_cases_button"
+        android:background="@drawable/button_bg"
+        android:textColor="#071019" />
 
     <Button
         android:id="@+id/whyTrustButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="@string/why_trust_button" />
+        android:text="@string/why_trust_button"
+        android:background="@drawable/button_bg"
+        android:textColor="#071019" />
 
 </LinearLayout>
